@@ -1,0 +1,618 @@
+<!doctype html><html lang="en">
+<head><title>master of what</title>
+<script defer src="nano.nutz.js"></script>
+<script defer src="nanopicker.js"></script>
+<style id="doc-styles">
+
+@font-face {
+    font-family : luckiest;
+    src : url(luckiest.ttf);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #888;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.qr {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    font-size: 14px;
+    font-family: georgia;
+    text-align: justify;
+    color: #eee;
+}
+
+hr {
+    width: 400px;
+    border-top: 1px solid #fff;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin: auto;
+}
+
+em {
+    font-weight: bold;
+}
+
+pre {
+    max-height: 120px;
+    overflow: scroll;
+    padding: 10px;
+}
+
+</style>
+<style id="nut-styles">
+
+nut-area {
+    position: relative;
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    width: 400px;
+    height: 240px;
+    --red-col: hsl(20,100%,30%);
+    --green-col: hsl(120,80%,22%);
+    --yellow-col1: hsl(40,100%,50%);
+    --yellow-col2: hsl(40,100%,60%);
+    --yellow-col3: hsl(40,100%,70%);
+    --grey-col: hsl(0,0%,22%);
+    --lite-col: hsl(0,0%,90%);
+    --trans-dur: 300ms;
+    
+}
+
+nut-area > svg {
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    overflow: visible;
+    outline: none;
+    user-select: none;
+}
+
+nut-area pattern > path {
+    transition: all linear var(--trans-dur);
+}
+
+nut-area > svg > path {
+    vector-effect: non-scaling-stroke;
+    stroke-width: 3;
+    stroke: var(--grey-col);
+    transition: d linear var(--trans-dur),
+    transform linear var(--trans-dur);
+}
+
+nut-area > svg > path:hover {
+    transform: scale(1.1);
+}
+
+nut-area:nth-of-type(even) > svg {
+    left 0px;
+}
+
+nut-area:nth-of-type(odd) > svg {
+    right: 0px;
+}
+
+nut-area > span:nth-of-type(1) {
+    position: absolute;
+    bottom: 3px;
+    color: #eee;
+    font-style:italic;
+    font-size: 0.85em;
+    transition: opacity linear var(--trans-dur);
+    opacity: 0;
+}
+
+nut-area:nth-of-type(even) > span:nth-of-type(1) {
+    right: 10px;
+}
+
+nut-area:nth-of-type(odd) > span:nth-of-type(1)::after {
+    content : '...';
+}
+
+nut-area:nth-of-type(even) > span:nth-of-type(1)::before {
+    content : '...';
+}
+
+nut-area:hover > span {
+    opacity: 1;
+}
+
+nut-area:nth-of-type(even) > .cap-area {
+    left: 60px;
+}
+
+nut-area:nth-of-type(odd) > .cap-area {
+    right: 60px;
+}
+
+nut-area:nth-of-type(even) > [data-nutz-info] {
+    right: 0;
+}
+
+nut-area:nth-of-type(odd) > [data-nutz-info] {
+    left: 0;
+}
+
+</style>
+<style id="inf-styles">
+[data-nutz-info] {
+    position: absolute;
+    top: 0;
+    height: calc(100% - 20px);
+    width: 150px;
+    overflow: visible;
+}
+[data-nutz-info] > div {
+    position: absolute;
+    width: 150px;
+    color: hsl(0,0%,22%);
+    opacity: 0;
+    font-size: 10px;
+    transition: opacity linear var(--trans-dur);
+}
+[data-nutz-info] .info-over {
+    opacity: 1;
+}
+[data-nutz-info] pre {
+    font-size: 6px;
+    margin: 0;
+    overflow: hidden;
+}
+</style>
+<style id="cap-styles">
+nut-area .cap-area {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 65px;
+    height: 80px;
+    width: 80px;
+    z-index: 1;
+    pointer-events: none;
+}
+nut-area .cap-area.hidden {
+    display: none;
+}
+nut-area .cap-hold {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all linear var(--trans-dur);
+}
+nut-area .perc, .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: luckiest;
+    text-align: center;
+    white-space: nowrap;
+}
+nut-area .perc {
+    position: relative;
+    color: var(--lite-col);
+    font-size: 80px;
+}
+nut-area .perc sup {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: -5px;
+    color: var(--grey-col);
+    font-size: 20px;
+    font-weight: bold;
+}
+nut-area .title {
+    position: absolute;
+    padding-top: 35px;
+    color: var(--grey-col);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+}
+nut-area .over {
+    opacity: 1;
+    transform: scale(1);
+}
+</style>
+</head>
+<body>
+
+<div class="qr">
+this study defines an intersection as
+<em>operational</em> when it has vehicles
+stopped at, or driving through it
+</div>
+<nut-area id="op-area">
+<span>operational period</span>
+<div data-nutz-info>
+    <div>operational<br>time:::
+    the various intersections averaged
+    around seventeen and a half hours
+    of operational time each day
+    <br><br>
+    surveyors observed ten intersections,
+    in areas zoned for commerce, twenty-four
+    hours per day, over the
+    course of four non-consecutive weeks,
+    to avoid official holidays of the
+    district's public school system
+    </div>
+    <div>non~<br>operating<br>time:::
+    in this <i>bedroom community</i>,
+    observed intersections spent
+    more than a quarter of each day without
+    any traffic in them at all
+    <br><br>
+    neither the NTSB, NACTO, or any
+    popular planning organization, keeps
+    statistics on the average use-hours
+    per day of intersections
+    <br><br>
+    engineers, however, typically
+    spend considerable time planning for
+    a situation that their solutions will
+    encounter during more than twenty-five
+    percent of their functional existence
+    </div>
+</div>
+<svg data-nutz>
+"arcs" : [
+  [72,"var(--green-col)"],
+  [28,"url(#op-dots)"]
+],
+"patterns" : [
+  ["op-dots","dots","var(--lite-col)",1.7]
+]
+</svg>
+</nut-area>
+<hr>
+
+<div class="qr">
+this study defines the
+<em>worst case</em>
+as a time when <i>no vehicle</i>
+at an operational intersection may proceed;
+that is to say, when every driver at the
+intersection faces a red light
+</div>
+<nut-area id="worst-area">
+<span>worst possible planning</span>
+<div data-nutz-info>
+    <div>worst<br>case:::
+        city planners have implimented a
+        system in which typical traffic
+        signals spend eight percent of their
+        operational time preventing
+        <i>every driver</i> at
+        that intersection from proceeding
+        <br><br>
+        while not an enormous proportion,
+        planners might want to consider why
+        this number should differ <i>at all</i>
+        from precisely zero?
+    </div>
+    <div>all other<br>time:::
+        this referes to a percentage <i>only</i>
+        of the operational time of each
+        intersection
+    </div>
+    <div>&lt;1 percent<br>accident:::
+        surveyors considered time during
+        clearing of accidents for the over-all
+        study, but omitted those accident
+        conditions when measuring the percent
+        for the <em>worst case</em> presented
+        here
+    </div>
+</div>
+<svg data-nutz>
+"arcs" : [
+  [8,"var(--red-col)"],
+  [91,"var(--green-col)"],
+  [1,"var(--yellow-col1)"]
+]
+</svg>
+</nut-area>
+<hr>
+
+<div class="qr">
+percent of vehicles forced to stop before
+crossing an intersection
+</div>
+<nut-area id="forced-stop">
+<span>forced to stop</span>
+<style>
+#forcedSVG > g {
+    transition: transform linear var(--trans-dur);
+}
+#forcedSVG > g:hover {
+    transform: scale(1.1);
+}
+#forcedSVG > g > path:nth-of-type(1) {
+    stroke-width: 3;
+    stroke: var(--grey-col);
+}
+#forcedSVG > g > path:nth-of-type(n+2) {
+    stroke-width: 0.5;
+    stroke: hsla(20,90%,20%,1);
+    d: path(var(--sub-arc));
+    transition: all linear var(--trans-dur);
+}
+#forcedSVG:has(g > path:nth-of-type(2):hover)
+#force-hatch1 > path {
+    fill: hsla(20,100%,100%,0.4);
+}
+#forcedSVG:has(g > path:nth-of-type(3):hover)
+#force-hatch2 > path {
+    fill: hsla(20,100%,100%,0.4);
+}
+</style>
+<div data-nutz-info>
+    <div>green<br>light:::
+        only thriteen percent of drivers
+        will find themselves lucky enough
+        to drive straight through a green
+        light at an intersection
+        <br><br>
+        once again, this is nothing more
+        than the chance that
+        <i>a car will drive through
+        an intersection while the light
+        is green</i>
+    </div>
+    <div>forced<br>to stop:::
+        a whopping eighty-seven percent of
+        drivers will have to stop, and sit,
+        and wait, at an intersection before
+        passing through it
+        <br><br>
+        even at intersections along routes
+        that planners have supplosively
+        timed to coordinate with driving
+        speed, the vast majority of drivers
+        will have to stop at an intersection
+        <br><br>
+        surveyors considered anything over
+        <i>one and a half seconds</i>
+        as a stop
+    </div>
+    <div>right<br>on red:::
+        drivers must, technically, come to
+        a complete stop before turning right
+        on red at each of the studied
+        intersections
+        <br><br>
+        however, drivers typically violate
+        this rule and experience something
+        slightly different from a complete
+        stop
+        <br><br>
+        though not true of any intersection
+        studied here, alternative traffic
+        designs <i>do permit</i> un-impeded
+        right turning
+    </div>
+    <div>no traffic:::
+        again, these drivers will be both
+        stopped, waiting,
+        <i>and</i> staring at a completely
+        empty intersection with no
+        cross traffic
+    </div>
+</div>
+<svg data-nutz id="forcedSVG">
+"arcs" : [
+  [87,"var(--red-col)"],
+  [13,"var(--green-col)"],
+  [11,"url(#force-hatch1)",{"sizes":[
+    ["--sub-arc",100,55,[4,4,2,4]]
+  ]}],
+  [7, "url(#force-hatch2)",{"sizes":[
+    ["--sub-arc",100,55,[4,0,0,4]]
+  ]}]
+],
+"patterns" : [
+  ["force-hatch1","hatch","var(--red-col)"],
+  ["force-hatch2","hatch","var(--red-col)"]
+]
+</svg>
+<script>
+
+(()=>document.addEventListener('DOMContentLoaded',()=>{
+        
+    const g = document.createElementNS(
+        'http://www.w3.org/2000/svg', 'g'
+    );
+    const cat1 = forcedSVG.children[1];
+    const sub0 = forcedSVG.children[3];
+    const sub1 = forcedSVG.children[4];
+    
+    g.append(cat1);
+    g.append(sub0);
+    g.append(sub1);
+    forcedSVG.append(g);
+    const log = console.log;
+    const d = v => document.getElementById(v);
+    const H1 = d('force-hatch1');
+    const H2 = d('force-hatch2');
+    H1.setAttribute('patternTransform','rotate(70)');
+    H2.setAttribute('patternTransform','rotate(70)');
+    
+}))();
+</script>
+</nut-area>
+<hr>
+
+<div class="qr">
+results from survey question:
+"How satisfied are you with traffic planning
+in the city?"
+</div>
+<nut-area id="likert-area">
+<span>driving satisfaction</span>
+<div data-nutz-info>
+    <div>highly satisfied:::
+        only eighteen percent of people
+        were highly, or somewhat, satisfied
+        with traffic coordination in the city
+    </div>
+    <div>somewhat<br>satisfied:::
+        surveyors sent three hundred and
+        fifty letters to addresses registered
+        with the state's Deptartment of
+        Motor Vehicles for haphazardly
+        selected license plates
+        verified to have passed through at
+        least one of the intersections
+        during the course of the study
+        <br><br>
+        respondants answered an online survey,
+        and received twenty-five dollars off
+        an oil change as an incentive to
+        reply
+    </div>
+    <div>can't complain<br>really:::
+        between twenty and twenty-five percent
+        of respondants to any survey will not
+        understand the question at all
+    </div>
+    <div>somewhat<br>aggrevated:::</div>
+    <div>extremely upset:::
+        just over half of drivers claim
+        to be somewhat or extremely aggrevated
+        by the number of red lights they
+        encounter while driving in the city
+    </div>
+    <div>no response:::
+        ten percent of survents did not
+        respond
+    </div>
+</div>
+<svg data-nutz>
+"arcs" : [
+  [5],
+  [8,"var(--green-col)"],
+  [10,"hsl(120,80%,30%)"],
+  [20,"var(--yellow-col1)"],
+  [22,"hsl(20,100%,33%)"],
+  [30,"var(--red-col)"],
+  [10,"url(#op-dots)"]
+]
+</svg>
+</nut-area>
+
+<hr>
+<div class="qr" style="position:relative;user-select:none;height:200px;">
+<img src="panoptikon.png"
+ style="
+ position:absolute;
+ height:100px;
+ right:20px;
+ transform: scale(-1, 1);
+">
+</div>
+
+</body>
+<script id="caps-script">
+((
+ D = document,
+ O = Object,
+ A = O.assign,
+ J = JSON.parse,
+ E =(a,b,c)=>a.appendChild(A(D.createElement(b),c)),
+ L = (a,b,c,d={})=>a.addEventListener(b,c,d),
+ Q = (a,b) => a.querySelectorAll(b),
+ QFE = (a,b,c=()=>{})=>Q(a,b).forEach(c)
+ 
+ ,log = console.log
+ 
+) => QFE(D, 'nut-area', (
+    
+ nut, k, _,
+ svg = nut.querySelector('svg[data-nutz]'),
+ infos = Q(nut,'[data-nutz-info]>div'),
+ capDiv = E(nut,'div',{className:'cap-area'}),
+ caps = []
+ 
+) => {
+    
+    
+    // grap all the infos {
+    infos.forEach((div, i) => {
+        let
+        H = div.innerHTML,
+        idx = H.indexOf(':::');
+        if (idx >= 0) {
+            caps[i] = H.substring(0, idx);
+            div.innerHTML = H.substring(idx+3);
+        } else {
+            caps[i] = '';
+        }
+    });
+    //}
+    
+    // grap paths from svg's after load {
+    L(D,'DOMContentLoaded', () =>
+    QFE(svg,':scope > path, :scope > g > path',(arc, i) => {
+        
+        let pval = J(arc.dataset.nutz).perc;
+        
+        let cap = E(
+            capDiv, 'div', { className: 'cap-hold' }
+        );
+    
+        let perc = E(cap, 'div', {
+            className: 'perc',
+            innerHTML: pval + '<sup>%</sup>'
+        });
+    
+        let title = E(cap, 'div', {
+            className: 'title',
+            innerHTML: //'&nbsp;' +
+            (caps[i]==undefined?'':caps[i])
+        });
+    
+        arc.addEventListener('mouseover', e => {
+            cap.classList.toggle('over');
+            infos[i]?.classList.toggle('info-over');
+        });
+        arc.addEventListener('mouseout', e => {
+            cap.classList.toggle('over');
+            infos[i]?.classList.toggle('info-over');
+        });
+    }))
+    //}
+    
+    // do something on keypress {
+    svg.setAttribute('tabindex',k);
+        
+    L(svg, 'keydown', e => {
+        
+        if (e.key === 'c') {
+            capDiv.classList.toggle('hidden');
+        }
+        
+    });
+    //}
+    
+}))();
+    
+</script>
+</html>

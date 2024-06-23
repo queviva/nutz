@@ -1,0 +1,573 @@
+<!doctype html><html lang="en">
+<head><title>MIG nutz</title>
+<script defer src="mig.nutz.js">
+  "selector" : "nutz",
+  "hole" : 57,
+  "arcs" : [
+      [30,"var(--red-col)"],
+      [60,"var(--green-col)"],
+      [10,"pat(dots,var(--yellow-col1),4)"]
+  ]
+</script>
+<style id="doc-styles">
+
+@font-face {
+    font-family : luckiest;
+    src : url(luckiest.ttf);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #888;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.qr {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    font-size: 14px;
+    font-family: georgia;
+    text-align: justify;
+    color: #eee;
+}
+
+hr {
+    width: 400px;
+    border-top: 1px solid #fff;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin: auto;
+}
+
+em {
+    font-weight: bold;
+}
+
+pre {
+    max-height: 120px;
+    overflow: scroll;
+    padding: 10px;
+}
+
+</style>
+<style id="nut-styles">
+
+nut-area {
+    position: relative;
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    width: 400px;
+    height: 240px;
+    --red-col: hsl(20,100%,30%);
+    --green-col: hsl(120,80%,22%);
+    --yellow-col1: hsl(40,100%,50%);
+    --yellow-col2: hsl(40,100%,60%);
+    --yellow-col3: hsl(40,100%,70%);
+    --grey-col: hsl(0,0%,22%);
+    --lite-col: hsl(0,0%,90%);
+    --trans-dur: 300ms;
+    
+}
+
+nut-area > svg {
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    overflow: visible;
+    outline: none;
+    user-select: none;
+}
+
+nut-area pattern > path {
+    transition: all linear var(--trans-dur);
+}
+
+nut-area > svg > path {
+    vector-effect: non-scaling-stroke;
+    stroke-width: 3;
+    stroke: var(--grey-col);
+    transition: d linear var(--trans-dur),
+    transform linear var(--trans-dur);
+}
+
+nut-area > svg > path:hover {
+    transform: scale(1.1);
+}
+
+nut-area:nth-of-type(even) > svg {
+    left 0px;
+}
+
+nut-area:nth-of-type(odd) > svg {
+    right: 0px;
+}
+
+nut-area > span:nth-of-type(1) {
+    position: absolute;
+    bottom: 3px;
+    color: #eee;
+    font-style:italic;
+    font-size: 0.85em;
+    transition: opacity linear var(--trans-dur);
+    opacity: 0;
+}
+
+nut-area:nth-of-type(even) > span:nth-of-type(1) {
+    right: 10px;
+}
+
+nut-area:nth-of-type(odd) > span:nth-of-type(1)::after {
+    content : '...';
+}
+
+nut-area:nth-of-type(even) > span:nth-of-type(1)::before {
+    content : '...';
+}
+
+nut-area:hover > span {
+    opacity: 1;
+}
+
+nut-area:nth-of-type(even) > .cap-area {
+    left: 60px;
+}
+
+nut-area:nth-of-type(odd) > .cap-area {
+    right: 60px;
+}
+
+nut-area:nth-of-type(even) > [data-nutz-info] {
+    right: 0;
+}
+
+nut-area:nth-of-type(odd) > [data-nutz-info] {
+    left: 0;
+}
+
+</style>
+<style id="inf-styles">
+[data-nutz-info] {
+    position: absolute;
+    top: 0;
+    height: calc(100% - 20px);
+    width: 150px;
+    overflow: visible;
+}
+[data-nutz-info] > div {
+    position: absolute;
+    width: 150px;
+    color: hsl(0,0%,22%);
+    opacity: 0;
+    font-size: 10px;
+    transition: opacity linear var(--trans-dur);
+}
+[data-nutz-info] .info-over {
+    opacity: 1;
+}
+[data-nutz-info] pre {
+    font-size: 6px;
+    margin: 0;
+    overflow: hidden;
+}
+</style>
+<style id="cap-styles">
+nut-area .cap-area {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 65px;
+    height: 80px;
+    width: 80px;
+    z-index: 1;
+    pointer-events: none;
+}
+nut-area .cap-area.hidden {
+    display: none;
+}
+nut-area .cap-hold {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all linear var(--trans-dur);
+}
+nut-area .perc, .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: luckiest;
+    text-align: center;
+    white-space: nowrap;
+}
+nut-area .perc {
+    position: relative;
+    color: var(--lite-col);
+    font-size: 80px;
+}
+nut-area .perc sup {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: -5px;
+    color: var(--grey-col);
+    font-size: 20px;
+    font-weight: bold;
+}
+nut-area .title {
+    position: absolute;
+    padding-top: 35px;
+    color: var(--grey-col);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+}
+nut-area .over {
+    opacity: 1;
+    transform: scale(1);
+}
+</style>
+</head>
+<body>
+
+<div class="qr"><em>pico.nutz.js</em> does
+just about everything you would expect from
+a nutz-hole grapher
+</div>
+<nut-area id="pico-area">
+<script defer src="pico.nutz.js">
+"selector" : "[data-pico-nutz]"
+</script>
+<span>picometric solution</span>
+<div data-nutz-info>
+    <div>red:::far too simple for most of you</div>
+    <div>
+        green:::simple? more like <i>dimple</i>
+    </div>
+    <div>
+        yellow<br>melandre:::
+        spelling has never been my strongest suit
+    </div>
+</div>
+<svg data-pico-nutz>
+[55,"var(--red-col)"],
+[35,"var(--green-col)"],
+[10,"var(--yellow-col1)"]
+</svg>
+</nut-area>
+<hr>
+
+<div class="qr">
+this is the <em>mig nutz</em> version
+</div>
+<nut-area id="nano-area">
+<span>nano configuration</span>
+<div data-nutz-info>
+    <div>script defaults:::
+        specify defaults for all nutz in the
+        page using a data-param in the defer
+        script's tag
+<pre>
+&lt;script defer data-x='{
+ "selector" : "nutz",
+  "radius" : 100,
+  "hold" : 55
+}' src="nano.nutz.js&gt;
+&lt;/script&gt;
+</pre>
+        this includes the default radius and
+        hole size, aswell as the selector
+        name, incase you don't like <i>nutz</i>
+    </div>
+    <div>nut defaults:::
+        create an svg tag with the data-nutz,
+        or data-<i>selector</i> param, and
+        fill that tag with the configuration
+        object
+<pre>
+&lt;svg data-nutz&gt;
+  "radius" : 100,
+  "hole" : 55,
+  "arcs" : [
+    [30, "red"],
+    [60, "green"]
+    ...
+  ]
+&lt;/svg&gt;
+</pre>
+        values set here override the script
+        defaults, and become defaults
+        for all arcs in this nut
+    </div>
+    <div>arc values:::
+        specifying values in an options
+        object in the arc itself will
+        override any other defaults
+<pre>
+&lt;svg data-nutz&gt;
+"radius" : 100, //default radius
+"hole" : 55,    //default hole
+"arcs" : [
+  [10,"red"]
+  [45,"green",{
+    "id" : "sales",
+    "radius" : 120, // overrides
+    "hole" : 32     // defaults
+  }] ...
+]
+&lt;/svg&gt;
+</pre>
+    </div>
+    <div>sizes:::
+    in the nano version, each arc can have
+    a specific radius, hole size, or any
+    other key:value pair you want
+<pre>
+&lt;svg&gt;
+[40, "red"],
+[60, "blue", {
+  "radius", 150,
+  "hole", 60,
+  "some" : "other val" ...
+}]
+&lt;/svg&gt;
+</pre>
+    </div>
+    <div>key:values:::
+    any other key:value pairs that you
+    include in the configurations will
+    all get saved to the data-nutz
+    parameter of the arc's path tag
+<pre>
+&lt;svg&gt;
+[40, "blue", {
+  "id" : "bluebell",
+  "radius" : 150,
+  "some" : "value" ...
+}] ...
+&lt;/svg&gt;
+&lt;script&gt;
+bluebell.addEventListener('click',
+e => alert(
+  bluebell.dataset.nutz.some
+)});
+// alerts "value" on click
+&lt;/script&gt;
+&lt; &gt;
+</pre>
+    </div>
+    <div>patterns:::
+    in the svg tag, you may specify simple
+    patterns, or image files, that may be
+    used to fill arcs in the nutz,
+    </div>
+</div>
+<style>
+#nano-area > svg > path:nth-of-type(n+4):hover {
+    transform: scale(1);
+    d: path(var(--big-arc));
+}
+#nano-area .perc {
+    font-size: 90px;
+}
+</style>
+<svg data-nutz>
+"radius" : 100,
+"hole" : 57,
+"arcs" : [
+  [4.5],
+  [31,"img(red-building.png,0.3)"],
+  [40,"img(green-building.png)",{
+    "gaps" : [0,5,5,0]
+  }],
+  [20,"pat(dots,var(--lite-col),5,var(--red-col))"],
+  [3, "var(--yellow-col1)",{"sizes" : [
+    ["--big-arc", 120, 57]
+  ]}],
+  [3, "var(--yellow-col2)",{"sizes":[
+    ["--big-arc", 180, 57, [0,5,5,0]]
+  ]}],
+  [3, "var(--yellow-col3)",{"sizes" : [
+    ["--big-arc", 120, 57]
+  ]}]
+]
+</svg>
+</nut-area>
+<hr>
+
+
+<div class="qr">how simple can this be?</div>
+<nut-area id="simple-area">
+<span>incredible simplicity</span>
+<svg data-nutz>
+[31,"img(building0.png,0.3)"],
+[60,"pat(xdots,#333,2.7)"],
+[9,"var(--red-col)"]
+</svg>
+</nut-area>
+<hr>
+
+
+<div class="qr">default arcs for all</div>
+<nut-area id="defarc-area">
+<span>arc de faultumph</span>
+<style>
+#defarc-area > svg > path {
+    stroke: var(--lite-col);
+}
+</style>
+<div data-nutz-info>
+    <div>charles de gaul:::
+        the greatest president of the gauls
+    </div>
+    <div>m<sup>c</sup>mahon:::
+        when I was a child, I looked like
+        a gorilla, so I don't have the
+        problems normally associated with
+        pretty people
+    </div>
+    <div>pantheon ave:::
+        some addresses are easier then others
+    </div>
+</div>
+<svg data-nutz>
+"gaps" : [0,4,4,0]
+</svg>
+</nut-area>
+
+
+<hr>
+<div class="qr" style="
+position: relative;
+height: 200px;
+user-select: none;
+--nose-hsla:'33 100 60 0';
+">
+<div data-nose style="
+position: absolute;
+top: 0px;
+right: 0px;
+background-color: hsl(
+    var(--nose-h),
+    var(--nose-s),
+    var(--nose-l)
+);
+height: 200px;
+width: 200px;
+transform-origin: 100% 0%;
+transform: scale(0.4);
+clip-path: path('M 55 49 Q 61 28 62 8 Q 92 20 121 17 Q 117 45 121 72 Q 114 74 111 74 Q 107 83 108 99 Q 110 102 117 105.5 Q 125 103.5 130 103 Q 130 117 133 131 L 134.5 131 L 135 132 Q 141 129 146 127 Q 145 133 146 141 Q 153 141 163 137 Q 154 146 146 157 Q 137 156 127 157 Q 114 170 107 176 Q 102 170 98 167 Q 91 170 88 173 Q 81 152 83 134 L 91 136.5 Q 82 92 60 70 Q 61 65 63 59 Q 58 52 55 49 Z');
+">
+    <img id="hack" src="runningBox.png">
+</div>
+</div>
+</body>
+<script id="caps-script">
+((
+ // vars {
+ D = document,
+ O = Object,
+ A = O.assign,
+ J = JSON.parse,
+ E =(a,b,c)=>a.appendChild(A(D.createElement(b),c)),
+ L = (a,b,c,d={})=>a.addEventListener(b,c,d),
+ Q = (a,b) => a.querySelectorAll(b),
+ QFE = (a,b,c)=>Q(a,b).forEach(c)
+ 
+ ,log = console.log
+ //}
+) => QFE(D, 'nut-area', (
+ // nut vars {
+ nut, k, _,
+ svg = nut.querySelector(
+     'svg[data-pico-nutz], svg[data-nutz]'
+ ),
+ infos = Q(nut,'[data-nutz-info]>div'),
+ capDiv = E(nut,'div',{className:'cap-area'}),
+ caps = []
+ //}
+) => {
+    
+    // have to adjust for pico version {
+    let picodats =
+        nut.id === 'pico-area' ?
+        J(`[${svg.innerHTML}]`)
+        : '';
+    // }
+    
+    // grap all the infos {
+    infos.forEach((div, i) => {
+        let
+        H = div.innerHTML,
+        idx = H.indexOf(':::');
+        if (idx >= 0) {
+            caps[i] = H.substring(0, idx);
+            div.innerHTML = H.substring(idx+3);
+        } else {
+            caps[i] = '';
+        }
+    });
+    //}
+    
+    // grap paths from svg's after load {
+    L(D,'DOMContentLoaded', () =>
+    QFE(svg,':scope > path',(arc, i) => {
+        
+        let pval = J(
+            arc.dataset.nutz ||
+            `{"perc":${picodats[i][0]}}`
+        ).perc;
+        
+        let cap = E(
+            capDiv, 'div', { className: 'cap-hold' }
+        );
+    
+        let perc = E(cap, 'div', {
+            className: 'perc',
+            innerHTML: pval + '<sup>%</sup>'
+        });
+    
+        let title = E(cap, 'div', {
+            className: 'title',
+            innerHTML: '&nbsp;' +
+            (caps[i]==undefined?'':caps[i])
+        });
+    
+        arc.addEventListener('mouseover', e => {
+            cap.classList.toggle('over');
+            infos[i]?.classList.toggle('info-over');
+        });
+        arc.addEventListener('mouseout', e => {
+            cap.classList.toggle('over');
+            infos[i]?.classList.toggle('info-over');
+        });
+    }))
+    //}
+    
+    // do something on keypress {
+    svg.setAttribute('tabindex',k);
+        
+    L(svg, 'keydown', e => {
+        
+        if (e.key === 'c') {
+            capDiv.classList.toggle('hidden');
+        }
+        
+    });
+    //}
+    
+}))();
+    
+</script>
+</html>

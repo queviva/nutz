@@ -1,0 +1,240 @@
+<!doctype html><html lang="en">
+<head><title>baby stats</title>
+<script defer src="baby.nutz.js"></script>
+<script defer src="nanopicker.js"></script>
+<style id="doc-Styles">
+
+@font-face {
+    font-family : luckiest;
+    src : url(luckiest.ttf);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #888;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.qr {
+    position: relative;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    font-size: 14px;
+    font-family: georgia;
+    text-align: justify;
+    color: #eee;
+}
+
+hr {
+    width: 400px;
+    border-top: 1px solid #fff;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin: auto;
+}
+
+table {
+    margin:auto;
+    border-color: var(--darkness);
+    border-collapse: collapse;
+    font-size: 12px;
+    width: 400px;
+}
+
+</style>
+<style id="nutzDivArea">
+nutz-area {
+    position: relative;
+    display: none;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 10px;
+    --nose-hsla : '28 100 50 1';
+    --nut-col: var(--nose-h);
+    max-width: 400px;
+}
+
+nutz-area > span {
+    position: absolute;
+    bottom: 3px;
+    color: #eee;
+    font-style:italic;
+    font-size: 0.85em;
+    transition: opacity linear 200ms;
+    opacity: 0;
+}
+
+nutz-area:hover > span {
+    opacity: 1;
+}
+</style>
+<style id="nutzItself">
+nutz-area .nutz-holder {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+svg[data-nutz] {
+    height: 100%;
+    width: 100%;
+    overflow: visible;
+    user-select: none;
+}
+svg[data-nutz] .ground {
+    display: none;
+}
+svg[data-nutz] g {
+    transition: all linear 300ms;
+}
+svg[data-nutz] path {
+    vector-effect: non-scaling-stroke;
+    stroke-width: 3;
+}
+svg[data-nutz] .nutz-path {
+    stroke: #fff;
+    transition: transform linear 300ms;
+}
+svg[data-nutz] .nutz-path:hover {
+    transform: scale(1.1);
+}
+svg[data-nutz] .nutz-sub-path {
+    stroke: #fff;
+    filter: hue-rotate(120deg);
+}
+svg[data-nutz] .nutz-sub-path:hover {
+    transform: scale(1.13);
+}
+svg[data-nutz] g.subby:hover path:not(.ground):not(:hover) {
+    transform: scale(1.1);
+}
+svg[data-nutz] g.subby:hover .nutz-sub-path {
+    d: path(var(--full-arc));
+}
+svg[data-nutz] g.subby:hover .ground {
+    display: block;
+}
+</style>
+</head>
+<body>
+
+<div class="qr">
+We're going to try to make this as simple as
+possible for you, baby.  All you need to do
+is paste a <b>&lt;div&gt;</b> tag into this page.
+</div>
+
+<nutz-area>
+"id":"graf0",
+"radius" : 140,
+"hole" : 0.55,
+"arcs" : [
+    [0.1],
+    [26,"hsl(var(--graf0-col),90%,25%)",{
+        "id" : "heartDisease",
+        "subvals" : [
+            [10,"hsl(var(--graf0-col),100%,20%)",{"id":"nig"}],
+            [20,"hsl(var(--graf0-col),100%,40%)"],
+            [30,"hsl(var(--graf0-col),100%,60%)"],
+            [40,"hsl(var(--graf0-col),100%,80%)"]
+        ]
+    }],
+    [24,"hsl(var(--graf0-col),100%,30%)",{
+        "subvals" : [
+            [5,"hsl(var(--graf0-col),100%,20%)"],
+            [8,"hsl(var(--graf0-col),100%,32%)"],
+            [9,"hsl(var(--graf0-col),100%,44%)"],
+            [11,"hsl(var(--graf0-col),100%,56%)"],
+            [11,"hsl(var(--graf0-col),100%,68%)"],
+            [20,"hsl(var(--graf0-col),100%,80%)"],
+            [36,"url(#graf0dots)"]
+        ]
+    }],
+    [12,"hsl(var(--graf0-col),100%,37%)"],
+    [9,"hsl(var(--graf0-col),100%,44%)"],
+    [7,"hsl(var(--graf0-col),100%,51%)"],
+    [5,"hsl(var(--graf0-col),100%,58%)"],
+    [5,"hsl(var(--graf0-col),100%,65%)"],
+    [5,"hsl(var(--graf0-col),100%,72%)"],
+    [4,"url(#graf0dots)"],
+    [3,"url(#graf0hatch)"]
+],
+"patterns" : [
+    ["dots","hsl(var(--graf0-col),100%,100%)","graf0dots",0.5,"hsl(var(--graf0-col),100%,79%)"],
+    ["hatch","hsl(var(--graf0-col),100%,85%)","graf0hatch",0.5,"hsl(var(--graf0-col),90%,25%)"]
+]
+</nutz-area>
+<hr>
+</style>
+<nutz-area id="inxl" data-nose
+style="
+    --nose-hsla: '20 100 30 1';
+    --inxl-col: var(--nose-h), var(--nose-s);
+">
+"id":"inxl",
+"radius" : 140,
+"hole" : 0.55,
+"arcs" : [
+    [49,"hsl(var(--inxl-col),var(--nose-s),30%)",{"cap":"music",
+        "subvals" : [
+        [65, "#c30"],
+        [25, "#c30"],
+        [10, "#c30"]
+        ]
+    }],
+    [15,"hsl(var(--inxl-col),var(--nose-s),40%)",{"cap":"assertion"}],
+    [4,"hsl(var(--inxl-col),var(--nose-s),44%)",{"cap":"excuse"}],
+    [10,"hsl(var(--inxl-col),var(--nose-s),60%)",{"cap":"demand"}],
+    [8,"hsl(var(--inxl-col),var(--nose-s),70%)",{"cap":"compliment"}],
+    [5,"hsl(var(--inxl-col),var(--nose-s),80%)",{"cap":"question?"}],
+    [5,"hsl(var(--inxl-col),var(--nose-s),90%)",{"cap":"answer!"}],
+    [4,"url(#inxldots)",{"cap":"<br>&nbsp;one of<br>my kind"}]
+],
+"patterns" : [
+    ["dots","hsl(var(--inxl-col),var(--nose-s),100%)","inxldots",0.5,"hsl(var(--inxl-col),100%,79%)"],
+    ["hatch","hsl(var(--inxl-col),var(--nose-s),85%)","inxlhatch",0.5,"hsl(var(--inxl-col),90%,25%)"]
+]
+</nutz-area>
+
+<hr>
+<div data-nose class="qr" style="height:200px;--nose-hsla:'40 100 60 0'">
+<div style="
+position: absolute;
+top:0px;
+right: 0px;
+background-color: hsl(
+    var(--nose-h),
+    var(--nose-s),
+    var(--nose-l)
+);
+height: 200px;
+width: 200px;
+transform-origin: 100% 0%;
+transform: scale(0.5);
+clip-path: path('M 55 49 Q 61 28 62 8 Q 92 20 121 17 Q 117 45 121 72 Q 114 74 111 74 Q 107 83 108 99 Q 110 102 117 105.5 Q 125 103.5 130 103 Q 130 117 133 131 L 134.5 131 L 135 132 Q 141 129 146 127 Q 145 133 146 141 Q 153 141 163 137 Q 154 146 146 157 Q 137 156 127 157 Q 114 170 107 176 Q 102 170 98 167 Q 91 170 88 173 Q 81 152 83 134 L 91 136.5 Q 82 92 60 70 Q 61 65 63 59 Q 58 52 55 49 Z');
+
+"><img id="hack" src="runningBox.png"
+style="
+    height: 100%;
+    width: 100%;
+"
+></div>
+</div>
+</body>
+<script>
+document.addEventListener('DOMContentLoaded', e => {
+    
+});
+</script>
+</html>

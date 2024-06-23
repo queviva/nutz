@@ -1,0 +1,367 @@
+<!doctype html><html lang="en">
+<head><title>inxl</title>
+<script defer src="inxl.nutz.js"></script>
+<script defer src="nanopicker.js"></script>
+<style id="doc-styles">
+
+@font-face {
+    font-family : luckiest;
+    src : url(luckiest.ttf);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #888;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.qr {
+    position: relative;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    font-size: 14px;
+    font-family: georgia;
+    text-align: justify;
+    color: #eee;
+}
+
+hr {
+    width: 400px;
+    border-top: 1px solid #fff;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin: auto;
+}
+
+</style>
+<style id="nut-styles">
+nutz-area {
+    position: relative;
+    display: none;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 10px;
+    user-select: none;
+    --nose-hsla : '28 100 50 1';
+    --nut-col: var(--nose-h);
+    --trans-dur: 275.25ms;
+}
+nutz-area .nutz-holder {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+nutz-area svg {
+    height: 100%;
+    width: 100%;
+    overflow: visible;
+    user-select: none;
+}
+nutz-area path {
+    vector-effect: non-scaling-stroke;
+}
+nutz-area mask {
+    stroke: #000;
+    fill: #fff;
+}
+nutz-area .nutz-g {
+    transition: transform linear var(--trans-dur);
+}
+nutz-area .nutz-g-over:hover {
+    transform: scale(1.1);
+}
+nutz-area .nutz-arc {
+    stroke-width: 7;
+    stroke: #fff;
+    transition: transform linear var(--trans-dur);
+}
+nutz-area .nutz-mask-outer {
+    stroke-width: 12;
+}
+nutz-area .nutz-mask-inner {
+    stroke-width: 2.75;
+}
+nutz-area .nutz-sub {
+    stroke: hsla(var(--nut-col),100%,98%,0);
+    stroke-width: 3;
+    fill: hsla(var(--nut-col),100%,100%,0);
+    transition: all linear var(--trans-dur);
+}
+nutz-area .nutz-sub-off {
+    display: none;
+}
+nutz-area .nutz-sub:hover {
+    stroke : hsla(var(--nut-col),100%,100%,0.8);
+    xfill: hsla(var(--nut-col),100%,100%,0.3);
+}
+</style>
+<style id="top-styles">
+nutz-area .topper {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 10px;
+    font-family: luckiest;
+    color: hsl(var(--nut-col),100%,98%);
+    -webkit-text-stroke: 5px hsl(var(--nut-col,0),80%,20%);
+    letter-spacing: -0.04em;
+    opacity: 0;
+    transform: scale(0.5);
+    transition-property: transform, opacity;
+    transition-duration: var(--trans-dur);
+    xxx-filter: url(#noiz);
+    z-index: 1;
+}
+nutz-area .topper-over {
+    transform: scale(1);
+    opacity: 1;
+}
+</style>
+<style id="cap-styles">
+nutz-area .cap-holder {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+    width: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(0.3);
+    transition-property: transform, opacity;
+    transition-duration: var(--trans-dur);
+}
+nutz-area .cap-holder .perc,
+nutz-area .cap-holder .title {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10px;
+    width: 100%;
+    font-family: luckiest;
+}
+nutz-area .cap-holder .perc {
+    padding-top: 20%;
+    padding-left: 0.15em;
+    color: hsl(var(--inxl-col, 0), 100%, 100%);
+    -webkit-text-stroke: 3px hsl(var(--inxl-col), 90%, 30%);
+}
+nutz-area .cap-holder .perc > sup {
+    position: relative;
+    top: -1.8em;
+    left: -0.4em;
+    font-size: 0.2em;
+    font-weight: bold;
+    color: hsl(var(--inxl-col),90%,20%);
+    -webkit-text-stroke: 0px hsl(var(--inxl-col), 90%, 30%);
+}
+nutz-area .cap-holder .title {
+    padding-top: 1.5em;
+    font-weight: bold;
+    color: hsl(var(--inxl-col, 20),80%,20%);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+}
+nutz-area .cap-over {
+    opacity: 1;
+    transform: scale(1);
+}
+</style>
+<style id="ani-styles">
+
+nutz-area .shiver {
+    animation: 68.8124ms linear 10 shiver;
+}
+
+@keyframes shiver {
+    0% {
+        transform: scale(1.03);
+    } 100% {
+        transform: scale(1);
+    }
+}
+
+nutz-area .shiv-pulse {
+    animation-name: long-shiver, pulse;
+    animation-iteration-count: 10, 1;
+    animation-duration: 68.8124ms, 300ms;
+    animation-delay: 0ms, 689ms;
+}
+
+@keyframes long-shiver {
+    0% {
+        transform: scale(1.03);
+    } 100% {
+        transform: scale(1);
+    }
+}
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    } 50% {
+        transform: scale(1.1);
+    } 100% {
+        transform: scale(1);
+    }
+}
+
+nutz-area .my-kind {
+    animation-name: my-kind;
+    xxx-animation-duration: 1101ms;
+    animation-duration: 1201ms;
+    animation-fill-mode: forwards;
+}
+
+@keyframes my-kind {
+    8% {
+        transform: scale(1);
+    } 12%{
+        transform: scale(1.03);
+    } 16% {
+        transform: scale(1);
+    } 20% {
+        transform: scale(1.03);
+    } 24%{
+        transform: scale(1);
+    } 28% {
+        transform: scale(1.03);
+    } 32% {
+        transform: scale(1);
+    } 36% {
+        transform: scale(1.03);
+    } 50% {
+        transform: scale(1);
+    } 60% {
+        transform: scale(1.1);
+    } 75% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+nutz-area .explode {
+    transition: all ease-out 1101ms;
+    opacity: 0;
+    transform: scale(0.4);
+}
+
+#shiv {
+    fill: #333;
+    stroke: #909;
+    stroke-width: 20;
+}
+body {
+    transition: background-color linear 1101ms;
+}
+
+.nutz-body-plode {
+    background-color: #333;
+}
+
+</style>
+</head>
+
+<body>
+
+<nutz-area id="inxl">
+"id":"inxl",
+"radius" : 250,
+"hole" : 0.55,
+"initialPercent" : 0,
+"arcs" : [
+    [1.8],
+    [49,"hsl(var(--inxl-col),90%,30%)",{
+        "id":"music",
+        "cap":"music",
+        "subvals" : [
+            [10,"hsl(var(--inxl-col),100%,20%)"],
+            [20,"hsl(var(--inxl-col),100%,40%)"],
+            [30,"hsl(var(--inxl-col),100%,60%)",{
+                "id" : "shiv"
+            }],
+            [40,"hsl(var(--inxl-col),100%,80%)"]
+        ]
+    }],
+    [15,"hsl(var(--inxl-col),90%,40%)",{"cap":"assertion"}],
+    [4,"hsl(var(--inxl-col),95%,44%)",{"cap":"excuse"}],
+    [10,"hsl(var(--inxl-col),100%,60%)",{
+        "cap":"demand",
+        "subvals" : [
+            [50, "#000", {"cap":"slide over here"}],
+            [50, "#000", {"cap":"give me a moment"}]
+        ]
+    }],
+    [8,"hsl(var(--inxl-col),100%,70%)",{
+        "cap":"compliment",
+        "subvals" : [
+            [33, "#000", {"cap":"your moves are so raw"}],
+            [33, "#000", {"cap":"there's something about you"}],
+            [33, "#000", {"cap":"that makes me sweat"}]
+        ]
+    }],
+    [5,"hsl(var(--inxl-col),100%,80%)",{"cap":"question?"}],
+    [5,"hsl(var(--inxl-col),100%,90%)",{"cap":"answer!"}],
+    [4,"url(#inxldots)",{
+        "id" : "mykind",
+        "cap":"<br>&nbsp;one of<br>my kind"
+    }]
+],
+"patterns" : [
+    ["dots","hsl(var(--inxl-col),100%,100%)","inxldots",0.35,"hsl(var(--inxl-col),100%,27%)"],
+    ["wave","hsl(var(--inxl-col),100%,95%)","inxlhatch",0.5,"hsl(var(--inxl-col),90%,25%)"]
+        
+]
+
+</nutz-area>
+<script defer src="inxl.extra.js"></script>
+
+
+<hr>
+<nutz-area>
+"id" : "nutty",
+"radius" : 80,
+"arcs" : [
+    [60, "#c30"],
+    [30, "#ea0"],
+    [10, "url(#inxlhatch)"]
+]
+</nutz-area>
+<hr>
+<div class="qr" style="text-align:right;">
+    <img src="abe.png" style="height:80px;"/>
+</div>
+<svg viewBox="0 0 180 100">
+    <filter id="noiz" x="0%" y="0%" width="100%" height="100%">
+        <feTurbulence
+            baseFrequency="0.01 0.4"
+            numOctaves="4"
+            result="NOISE"
+        />
+        <feDisplacementMap
+            scale="5"
+            in="SourceGraphic" in2="NOISE"
+            xChannelSelector="R"
+            yChannelSelector="R"
+        />
+    </filter>
+
+</svg>
+</body>
+</html>

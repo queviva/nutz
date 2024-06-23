@@ -1,0 +1,274 @@
+<!doctype html><html lang="en">
+<head><title>re-tag nutz</title>
+<script defer src="tag.nutz.js">
+"xxx-radius":111
+</script>
+<style id="docStyles">
+
+@font-face {
+    font-family : luckiest;
+    src : url(luckiest.ttf);
+}
+
+@font-face {
+    font-family : metal;
+    src : url(metal.ttf);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #888;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.qr {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    font-size: 28px;
+    font-family: georgia;
+    text-align: justify;
+    color: #eee;
+}
+
+hr {
+    width: 800px;
+    border-top: 1px solid #fff;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin: auto;
+}
+
+</style>
+<style id="expoAreaStyles">
+
+expo-zone {
+    position: relative;
+    display: block;
+    margin: auto;
+    width: 800px;
+    height: 440px;
+    margin: auto;
+    padding: 20px;
+}
+
+expo-zone > span {
+    position: absolute;
+    bottom: 3px;
+    color: #eee;
+    font-style:italic;
+    font-size: 0.85em;
+    transition: opacity linear 200ms;
+    opacity: 0;
+}
+
+expo-zone:nth-of-type(even) span {
+    right: 10px;
+}
+
+expo-zone:nth-of-type(odd) span:after {
+    content : '...';
+}
+
+expo-zone:nth-of-type(even) span:before {
+    content : '...';
+}
+
+expo-zone:hover > span {
+    opacity: 1;
+}
+
+</style>
+</head>
+<body>
+    
+<div class="qr">
+    this uses custome tags to allow for the
+    creation and manipulation of every aspect
+    of the nutz
+</div>
+
+<expo-zone defaults style="color:white;font-family:luckiest;">
+<span>default arcs</span>
+<style>
+#first {
+    position: absolute;
+    right: 10px;
+    overflow: visible;
+    height: 400px;
+    width: 400px;
+}
+#girls-caption {
+    position: absolute;
+    top: -60px;
+    font-size: 8px;
+    white-space: nowrap;
+    text-align: center;
+    color: pink;
+    -webkit-text-stroke: 0.4px white;
+}
+
+#boys-percent {
+    fill: white;
+    stroke-width: 2px;
+    stroke: lightblue;
+}
+#boys-symbol {
+    fill: lightblue;
+    stroke:none;
+}
+#boys-caption {
+    top: -60px;
+    color: lightblue;
+    -webkit-text-stroke: 0.5px white;
+}
+
+#first pattern path:nth-of-type(2) {
+    filter:blur(0.1px);
+}
+nut-arc { display: none; }
+
+</style>
+<nut-tag id="first">
+  <nut-arc id="girls"
+  perc="69"
+  fill="pat(love,white,pink,5)"
+  stroke="white" stroke-width="2px"
+  nopercent
+  >
+      <nut-cap id="girls-caption">
+          more likely to have girls
+          <br>
+          <img src="mp3.png">
+      </nut-cap>
+  </nut-arc>
+  <nut-arc id="boys" perc="31"
+  stroke="white" stroke-width="2px"
+  cap="what is up<br><img src='pillov.png' height='50px'>with<br>having babies?"
+  onclick="this.toggle('percent');this.toggle('caption')"
+  xxx-fill="lightblue"
+  fill="pat(M0 .25A.125 .125 0 1 1 0 .26,white,lightblue,10)"
+  xxx-fill="pat(M.2 .2Q1 -0.1 1.8 .2Q2.1 1 1.8 1.8Q1 2.1 .2 1.8Q-0.1 1 .2 .2Z,hsl(200,100%,85%),white,11)"
+  nopercent
+  ></nut-arc>
+</nut-tag>
+</expo-zone>
+<hr>
+
+
+<expo-zone customized style="font-family:metal;">
+<span>some customization</span>
+<style>
+#second {
+    position: absolute;
+    height: 400px;
+    width: 400px;
+    overflow: visible;
+    left: 10px;
+}
+#second .nut-arc {
+    vector-effect: non-scaling-stroke;
+    stroke-width: 2.5;
+    stroke: #333;
+    transition: all linear 300ms;
+}
+#second .nut-arc:hover {
+    d: path(var(--sub-arc));
+}
+#second .nut-arc:active {
+    stroke: #eee;
+}
+#second .nut-label  {
+    font-size: 60px;
+    fill: #eee;
+    transform: scale(0.3);
+    transition: all linear 300ms;
+}
+#second .nut-label-hover {
+    transform: scale(1);
+}
+#second .nut-caption {
+    letter-spacing: 0.2em;
+    text-indent: 0.2em;
+    color: #333;
+}
+#second .kuntz:hover {
+    fill: hsl(20,100%,22%);
+}
+#second:has(.kuntz:hover) #gapper {
+    d: path(var(--mid-arc));
+    stroke: #333;
+}
+#second #gapper {
+    stroke: white;
+    pointer-events: none;
+}
+</style>
+<nut-tag
+ id="second"
+ hole="57"
+ gaps="0,2.5,2.5,0"
+ sizes='[
+    ["--sub-arc",107,57,[0,2.5,2.5,0]],
+    ["--mid-arc",107,57,[5,7,7,5]]
+ ]'
+ >
+    <nut-arc
+     id="red44"
+     perc="43"
+     fill="img(building0.png,0.35)"
+     cap="IMAGES"
+    ></nut-arc>
+    <nut-arc
+     perc="34"
+     fill="pat(stix,#333,hsl(20,100%,22%),7)"
+     cap="PATTERNS"
+    ></nut-arc>
+    <nut-arc perc="23"
+    fill="#333"
+    class="kuntz"
+    cap="GAPS"
+    ></nut-arc>
+    <nut-arc perc="77" skip></nut-arc>
+    <nut-arc id="gapper" perc="23" nopercent gaps="5,7,7,5"
+    fill="none" stroke-width="20px" stroke="white"
+    >
+        
+    </nut-arc>
+    
+</nut-tag>
+</expo-zone>
+<hr>
+
+<expo-zone simple style="color:white;">
+<img src="mp3.png" height="160px">
+<nut-tag id="simple" style="
+    position:relative;
+    display:inline-flex;
+    height:160px;
+    width:160px;
+">
+    <nut-arc perc="47" fill="lightblue"
+    cap="this is pretty much<br>what you'd think"></nut-arc>
+    <nut-arc perc="53" fill="pink"
+    cap="fairly simple<br>to use"
+    ></nut-arc>
+</nut-tag>
+<img src="pillov.png" height="160px">
+</expo-zone>
+<hr>
+
+
+
+<div class="qr" style="text-align:right;">
+    <img src="abe.png" style="height:80px;"/>
+</div>
+</body>
+</html>

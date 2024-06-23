@@ -1,0 +1,986 @@
+<!doctype html><html lang="en">
+<head><title>pico|nano nutz</title>
+<script defer src="pico.nutz.js"></script>
+<script defer src="mig.nutz.js">
+  "selector" : "nanutz"
+</script>
+
+<script defer src="nanopicker.js"></script>
+<style id="doc-styles">
+
+@font-face {
+    font-family : luckiest;
+    src : url(luckiest.ttf);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #888;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.qr {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    font-size: 14px;
+    font-family: georgia;
+    text-align: justify;
+    color: #eee;
+}
+
+hr {
+    width: 400px;
+    border-top: 1px solid #fff;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin: auto;
+}
+
+em {
+    font-weight: bold;
+}
+
+pre {
+    max-height: 120px;
+    overflow: scroll;
+    padding: 10px;
+}
+
+</style>
+<style id="nut-styles">
+
+nut-area {
+    position: relative;
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    width: 400px;
+    height: 240px;
+    --red-col: hsl(20,100%,30%);
+    --green-col: hsl(120,80%,22%);
+    --yellow-col1: hsl(40,100%,50%);
+    --yellow-col2: hsl(40,100%,60%);
+    --yellow-col3: hsl(40,100%,70%);
+    --grey-col: hsl(0,0%,22%);
+    --lite-col: hsl(0,0%,90%);
+    --trans-dur: 300ms;
+    
+}
+
+nut-area > svg {
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    overflow: visible;
+    outline: none;
+    user-select: none;
+}
+
+nut-area pattern > path {
+    transition: all linear var(--trans-dur);
+}
+
+nut-area > svg > path {
+    vector-effect: non-scaling-stroke;
+    stroke-width: 3;
+    stroke: var(--grey-col);
+    transition: d linear var(--trans-dur),
+    transform linear var(--trans-dur);
+}
+
+nut-area > svg > path:hover {
+    transform: scale(1.1);
+}
+
+nut-area:nth-of-type(even) > svg {
+    left 0px;
+}
+
+nut-area:nth-of-type(odd) > svg {
+    right: 0px;
+}
+
+nut-area > span:nth-of-type(1) {
+    position: absolute;
+    bottom: 3px;
+    color: #eee;
+    font-style:italic;
+    font-size: 0.85em;
+    transition: opacity linear var(--trans-dur);
+    opacity: 0;
+}
+
+nut-area:nth-of-type(even) > span:nth-of-type(1) {
+    right: 10px;
+}
+
+nut-area:nth-of-type(odd) > span:nth-of-type(1)::after {
+    content : '...';
+}
+
+nut-area:nth-of-type(even) > span:nth-of-type(1)::before {
+    content : '...';
+}
+
+nut-area:hover > span {
+    opacity: 1;
+}
+
+nut-area:nth-of-type(even) > .cap-area {
+    left: 60px;
+}
+
+nut-area:nth-of-type(odd) > .cap-area {
+    right: 60px;
+}
+
+nut-area:nth-of-type(even) > [data-nutz-info] {
+    right: 0;
+}
+
+nut-area:nth-of-type(odd) > [data-nutz-info] {
+    left: 0;
+}
+
+</style>
+<style id="inf-styles">
+[data-nutz-info] {
+    position: absolute;
+    top: 0;
+    height: calc(100% - 20px);
+    width: 150px;
+    overflow: visible;
+}
+[data-nutz-info] > div {
+    position: absolute;
+    width: 150px;
+    color: hsl(0,0%,22%);
+    opacity: 0;
+    font-size: 10px;
+    transition: opacity linear var(--trans-dur);
+}
+[data-nutz-info] .info-over {
+    opacity: 1;
+}
+[data-nutz-info] pre {
+    font-size: 6px;
+    margin: 0;
+    overflow: hidden;
+}
+</style>
+<style id="cap-styles">
+nut-area .cap-area {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 65px;
+    height: 80px;
+    width: 80px;
+    z-index: 1;
+    pointer-events: none;
+}
+nut-area .cap-area.hidden {
+    display: none;
+}
+nut-area .cap-hold {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all linear var(--trans-dur);
+}
+nut-area .perc, .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: luckiest;
+    text-align: center;
+    white-space: nowrap;
+}
+nut-area .perc {
+    position: relative;
+    color: var(--lite-col);
+    font-size: 80px;
+}
+nut-area .perc sup {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: -5px;
+    color: var(--grey-col);
+    font-size: 20px;
+    font-weight: bold;
+}
+nut-area .title {
+    position: absolute;
+    padding-top: 35px;
+    color: var(--grey-col);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+}
+nut-area .over {
+    opacity: 1;
+    transform: scale(1);
+}
+</style>
+</head>
+<body>
+
+<div class="qr">
+if you are happy using default values,
+providing all styles, and adding any
+functionality,
+the miniscule <em>pico.nutz.js</em>
+version parses the simplest possible
+svg tag
+</div>
+<nut-area id="pico-area">
+<span>picometric nutz</span>
+<div data-nutz-info>
+    <div>singing:::
+        create an svg tag, give it a
+        data-nutz param, and list the
+        percent/color pairs for each arc
+        you want displayed
+<pre>
+&lt;svg data-nutz&gt;
+[30,"red"],  // 30% red arc
+[60,"green], // green for 60%
+[10,"yellow] // yellow for 10%
+&lt;/svg&gt;
+</pre>
+       
+    </div>
+    <div>drinking:::
+        add whatever styles or scripts you
+        want to manipulate the path children
+        of the &lt;svg data-nutz&gt; tag
+<pre>
+&lt;style&gt;
+[data-nutz] > path:hover {
+  stroke: #fff;
+}
+[data-nutz] > path:nth-of-type(1) {
+  stroke: purple;
+} ...
+&lt;/style&gt;
+&lt;script&gt;
+document.querySelectorAll(
+  '[data-nutz] > path'
+).forEach(arc => {
+  // ...
+};
+&lt;/script&gt;
+</pre>
+    </div>
+    <div>dancing:::
+        I'm beginning to question your
+        commitment to Sparkle Motion<sup>(tm)</sup>
+        <br><br>
+        pico.nutz appear as plain arcs
+        with no stroke, and a hole at 55%
+        of the radius:
+        <br>
+        <svg data-nutz style="
+            height:40px;
+            width: 100%;
+        ">
+        [30,"var(--red-col)"],
+        [60,"var(--green-col)"],
+        [10,"var(--yellow-col1)"]
+        </svg>
+        
+        <br>
+        they require styling and scripting
+        to perform any activities
+
+    </div>
+    <div>loving:::
+        omitting a color value leaves a
+        blank portion of the arc:
+<pre>
+&lt;svg&gt;
+[30,"red"],
+[5],
+[50,"green"],
+[5],
+[10,"yellow"]
+&lt;/svg&gt;
+</pre>
+<svg data-nutz style="height:40px;width:100%;">
+[30,"var(--red-col)"],
+[5],
+[50,"var(--green-col)"],
+[5],
+[10,"var(--yellow-col1)"]
+</svg>
+    </div>
+    <div>driving:::
+        the five hundred and twenty byte
+        pico version creates
+        arcs with a radius at the full size
+        of the svg element, and a hole at
+        fifty-five percent of the radius;
+        they must be denoted with the param
+        <i>data-nutz</i>
+        <br><br>
+        if you want anything different from
+        that, you can use the
+        <em>nano.nutz.js</em> version
+    </div>
+</div>
+<svg id="piconut" data-nutz>
+[31,"var(--red-col)"],
+[60,"var(--green-col)"],
+[3, "var(--yellow-col1)"],
+[3, "var(--yellow-col2)"],
+[3, "var(--yellow-col3)"]
+</svg>
+</nut-area>
+
+<hr>
+<div class="qr">
+for a little more configurability,
+the <em>nano.nutz.js</em> script allows
+preferences to be passed in
+</div>
+<nut-area id="nano-area">
+<span>nano configuration</span>
+<div data-nutz-info>
+    <div>script defaults:::
+        specify defaults for all nutz in the
+        page using a data-param in the defer
+        script's tag
+<pre>
+&lt;script defer data-x='{
+ "selector" : "nutz",
+  "radius" : 100,
+  "hold" : 55
+}' src="nano.nutz.js&gt;
+&lt;/script&gt;
+</pre>
+        this includes the default radius and
+        hole size, aswell as the selector
+        name, incase you don't like <i>nutz</i>
+    </div>
+    <div>nut defaults:::
+        create an svg tag with the data-nutz,
+        or data-<i>selector</i> param, and
+        fill that tag with the configuration
+        object
+<pre>
+&lt;svg data-nutz&gt;
+  "radius" : 100,
+  "hole" : 55,
+  "arcs" : [
+    [30, "red"],
+    [60, "green"]
+    ...
+  ]
+&lt;/svg&gt;
+</pre>
+        values set here override the script
+        defaults, and become defaults
+        for all arcs in this nut
+    </div>
+    <div>arc values:::
+        specifying values in an options
+        object in the arc itself will
+        override any other defaults
+<pre>
+&lt;svg data-nutz&gt;
+"radius" : 100, //default radius
+"hole" : 55,    //default hole
+"arcs" : [
+  [10,"red"]
+  [45,"green",{
+    "id" : "sales",
+    "radius" : 120, // overrides
+    "hole" : 32     // defaults
+  }] ...
+]
+&lt;/svg&gt;
+</pre>
+    </div>
+    <div>sizes:::
+    in the nano version, each arc can have
+    a specific radius, hole size, or any
+    other key:value pair you want
+<pre>
+&lt;svg&gt;
+[40, "red"],
+[60, "blue", {
+  "radius", 150,
+  "hole", 60,
+  "some" : "other val" ...
+}]
+&lt;/svg&gt;
+</pre>
+    </div>
+    <div>key:values:::
+    any other key:value pairs that you
+    include in the configurations will
+    all get saved to the data-nutz
+    parameter of the arc's path tag
+<pre>
+&lt;svg&gt;
+[40, "blue", {
+  "id" : "bluebell",
+  "radius" : 150,
+  "some" : "value" ...
+}] ...
+&lt;/svg&gt;
+&lt;script&gt;
+bluebell.addEventListener('click',
+e => alert(
+  bluebell.dataset.nutz.some
+)});
+// alerts "value" on click
+&lt;/script&gt;
+&lt; &gt;
+</pre>
+    </div>
+    <div>patterns:::
+    in the svg tag, you may specify simple
+    patterns, or image files, that may be
+    used to fill arcs in the nutz,
+    </div>
+</div>
+<style>
+#nano-area > svg > path:nth-of-type(n+4):hover {
+    transform: scale(1);
+    d: path(var(--big-arc));
+}
+#nano-area .perc {
+    font-size: 90px;
+}
+</style>
+<svg data-nanutz>
+"radius" : 100,
+"hole" : 57,
+"patterns" : [
+  ["dotties","dots","hsl(0,100%,100%)",1.5]
+],
+"sizes" : [
+  ["--big-arc", 120,57]
+],
+"arcs" : [
+  [31,"var(--red-col)"],
+  [40,"var(--green-col)"],
+  [20,"url(#dotties)"],
+  [3, "var(--yellow-col1)"],
+  [3, "var(--yellow-col2)"],
+  [3, "var(--yellow-col3)"]
+]
+</svg>
+</nut-area>
+
+<hr>
+<div class="qr">
+individual arcs may have individual properties
+set by an optional object that overrides the
+default values
+</div>
+<nut-area id="indy-area">
+<span>individual values</span>
+<div data-nutz-info>
+    <div>no caption:::
+        each one of these arcs has its own
+        radius and hole size, set using the
+        options object in the "arcs" property
+        of the svg tag's html
+<pre>
+&lt;svg data-nutz&gt;
+"arcs" : [
+  [31,"red", {
+    "id" : "bigred",
+    "radius" : 110,
+    "hole" : 45
+  }] ...
+]
+&lt;/svg&gt;
+</pre>
+        
+    </div>
+</div>
+<style>
+#indy-area > svg > path:hover {
+    transform: scale(1);
+}
+#indy-area > .cap-area {
+    display: none;
+}
+</style>
+<svg data-nanutz>
+"arcs" : [
+ [30,"var(--red-col)",{
+    "id":"rocky","radius":110,"hole":45
+ }],
+ [40,"var(--green-col)",{"radius":105,"hole":50}],
+ [10,"var(--yellow-col1)",{"radius":100,"hole":55}],
+ [10,"var(--yellow-col2)",{"radius":95,"hole":60}],
+ [10,"var(--yellow-col3)",{"radius":90,"hole":65}]
+]
+</svg>
+</nut-area>
+
+<hr>
+<div class="qr">
+<em>nano.nutz.js</em> also allows for
+specifying various different sizes of
+radius/hole that get created as css vars:
+</div>
+<nut-area id="sizes-area">
+<span>various sizes</span>
+<style>
+#sizenut > path:hover {
+    transform: scale(1);
+    d: path(var(--big-arc));
+}
+</style>
+<svg data-nanutz id="sizenut">
+"arcs" : [
+  [31,"var(--red-col)",{
+    "sizes" : [["--big-arc",110,55]]
+  }],
+  [60,"var(--green-col)",{
+    "sizes" : [["--big-arc",110,45]]
+  }],
+  [3,"var(--yellow-col1)"],
+  [3,"var(--yellow-col2)"],
+  [3,"var(--yellow-col3)"]
+],
+"sizes" : [
+  ["--big-arc", 120, 0]
+]
+</svg>
+</nut-area>
+
+<hr>
+<div class="qr">
+<em>nano.nut.js</em> allows for simple
+creation of various patterns
+</div>
+<nut-area id="pattern-area">
+<span>various patterns</span>
+<style>
+#pattern-area > svg > path:hover {
+    transform: scale(1);
+    d: path(var(--big-arc));
+}
+</style>
+<svg data-nanutz>
+"patterns" : [
+    ["dottie","dots","hsl(100,90%,30%)",
+        3,"var(--green-col)"],
+    ["hatchie","hatch","hsl(20,100%,40%)",
+        3,"var(--red-col)"
+    ],
+    ["crossie","cross","hsl(40,100%,90%)",
+        3,"var(--yellow-col1)"],
+    ["checkie","check","hsl(40,100%,90%)",
+        4,"var(--yellow-col1)"],
+    ["wavie","wave","hsl(40,100%,90%)",
+        4,"var(--yellow-col1)"]
+],
+"sizes" : [
+    ["--big-arc",120,55]
+],
+"arcs" : [
+    [30,"url(#hatchie)"],
+    [40,"url(#dottie)"],
+    [10,"url(#crossie)"],
+    [10,"url(#checkie)"],
+    [10,"url(#wavie)"]
+]
+</svg>
+</nut-area>
+
+<hr>
+<div class="qr">
+because of svg's notoriously difficult outlining,
+<em>nano.nutz.js</em> allows for specification of
+gaps around each arc
+</div>
+<nut-area id="gaps-area">
+<span>gap nutz</span>
+<style>
+#gaps-area > svg > path {
+    transition:all linear var(--trans-dur);
+}
+#gaps-area > svg > path:hover {
+    transform: scale(1);
+    d: path(var(--sub-arc));
+}
+#gap-dotz > path {
+    transition-duration: calc(5*var(--trans-dur));
+}
+#gaps-area > svg:has(path:nth-of-type(1):hover)
+#gap-dotz > path:nth-of-type(2)
+{
+    transition-duration: var(--trans-dur);
+    fill: var(--lite-col);
+}
+#gaps-area > .cap-area {
+    display: none;
+}
+</style>
+<svg data-nanutz>
+"gaps" : [0,3,3,0],
+"arcs" : [
+ [30,"url(#gap-dotz)"],
+ [40,"var(--green-col)"],
+ [10,"var(--yellow-col1)"],
+ [10,"var(--yellow-col2)"],
+ [10,"var(--yellow-col3)"]
+],
+"patterns" : [
+ ["gap-dotz","dots","var(--red-col)",
+    3,"var(--red-col)"]
+],
+"sizes" : [
+ ["--sub-arc",100,55,[4,3,3,4]]
+]
+</svg>
+</nut-area>
+
+<hr>
+<div class="qr">
+maybe <em>nano.nutz.js</em> also allows for
+the easy creation of svg images, because of
+how annoying it is to fill svg elements
+with an image
+</div>
+<nut-area id="image-area">
+<span>pain in the imagezz</span>
+<div data-nutz-info>
+    <div>townhomes:::
+    <em>nutz.js</em> has made it
+    as easy as possible to fill donutz with
+    images - specify the images in the options
+    with an identifier, the path to the image,
+    and the optional scaling value
+<pre>
+"images" : [
+  ["urlname","imgFile.ext",scale],
+  ["red-pic","redhouse.png"],
+  ["green-pic","greenhouse.png",3.4] ...
+]
+</pre>
+    </div>
+    <div>bureaux:::
+    then you can simply specify that image
+    as the url for the fill value of any arc
+<pre>
+"arcs" : [
+  [20, "url(#red-pic)"],
+  [43, "url(#green-pic)"] ...
+]
+</pre>
+        
+    </div>
+    <div>demeures:::</div>
+    <div>cara&iuml;bes:::</div>
+    <div>ch&acirc;teaux:::
+    to fill an arc with an image, simply ...
+    oh wait, svg sucks
+    </div>
+</div>
+<style>
+#image-area > svg > path:hover {
+    transform: scale(1);
+    d: path(var(--big-arc));
+}
+#image-area > svg > path:nth-of-type(n+3):hover {
+    transform: scale(1);
+    d: path(var(--bigger-arc));
+}
+
+#image-area .perc {
+    font-family: georgia;
+    font-size: 20px;
+    padding-bottom: 35px;
+}
+#image-area .perc > sup {
+    font-size: 4px;
+    padding-top: 5px;
+}
+#image-area .title {
+    font-family: georgia;
+    padding-bottom: 20px;
+}
+#image-area > svg > path {
+    stroke-width: 1.2px;
+}
+#image-area > svg > path:nth-of-type(1) {
+    stroke: hsl(20,90%,20%);
+}
+#image-area > svg > path:nth-of-type(2) {
+    stroke: hsl(100,90%,11%);
+}
+#image-area > svg > path:nth-of-type(4) {
+    stroke: hsl(40,100%,50%);
+}
+#image-area > svg > path:nth-of-type(3) {
+    stroke: hsl(30,100%,60%);
+}
+#image-area > svg > path:nth-of-type(5) {
+    stroke: hsl(30,100%,70%);
+}
+</style>
+<svg data-nanutz>
+"gaps" : [0,2.5,2.5,0],
+"arcs" : [
+ [30,"url(#red-build)"],
+ [40,"url(#green-build)"],
+ [10,"url(#yellow-build2)"],
+ [10,"url(#yellow-build1)"],
+ [10,"url(#yellow-build4)"]
+],
+"images" : [
+ ["red-build","red-building.png",0.35],
+ ["green-build","green-building.png",0.52],
+ ["yellow-build1","yellow-building1.png",0.2],
+ ["yellow-build2","yellow-building2.png",0.25],
+ ["yellow-build3","yellow-building3.png",0.25],
+ ["yellow-build4","yellow-building4.png",0.15]
+],
+"sizes" : [
+ ["--big-arc",120,60.5,[0,2.5,2.5,0]],
+ ["--bigger-arc",140,60.5,[0,2.5,2.5,0]]
+]
+</svg>
+</nut-area>
+
+<hr>
+<div class="qr">
+<em>nutz.js</em> does not limit itself to
+graphing only 100%, allowing for sub-designations
+</div>
+<nut-area id="laps-area">
+<span>overlapping magisteria</span>
+<div data-nutz-info>
+    <div>heart<br>disease:::</div>
+    <div>respiratory<br>illness:::</div>
+    <div>murder:::</div>
+    <div>overdose:::</div>
+    <div>driving<br>accident:::</div>
+    <div>coronary<br>artery<br>disease<br>
+     18% of<br>heart disease:::
+    </div>
+    <div>sub of<br>heart disease:::</div>
+    <div>sub of<br>heart disease:::</div>
+    <div>sub of<br>heart disease:::</div>
+    <div>sub of<br>heart disease:::</div>
+    <div>just from<br>smoking:::</div>
+</div>
+<style>
+#laps-area .title {
+    font-family: times;
+    font-size: 10px;
+    line-spacing: 0.3em;
+}
+#laps-area .perc {
+    font-family: times;
+    font-size: 40px;
+    padding-bottom: 20px;
+}
+#laps-area sup {
+    font-size: 8px;
+}
+#laps-area > svg > path:hover {
+    transform: scale(1);
+}
+
+#laps-area > svg > path:nth-of-type(n+6) {
+    stroke-width: 0.0px;
+    stroke: var(--lite-col);
+    d: path(var(--sub-arc));
+    opacity: 0;
+    transition: opacity linear var(--trans-dur);
+}
+#laps-area > svg > path:nth-of-type(n+6):hover {
+    transform: scale(1);
+    opacity: 1;
+}
+#laps-area > svg > path:nth-of-type(1):hover
+~path:nth-of-type(n+6) {
+    xxx-transform: scale(1.1);
+}
+#laps-area .cap-hold:nth-of-type(n+6) > .perc {
+    display: none;
+    font-size: 20px;
+    padding-bottom: 40px;
+}
+#laps-area .cap-hold:nth-of-type(n+6) > .title {
+    padding-bottom: 50px;
+    font-size: 8px;
+}
+</style>
+<svg data-nanutz>
+"arcs" : [
+  [60,"var(--red-col)"],
+  [31,"var(--green-col)"],
+  [3,"var(--yellow-col1)"],
+  [3,"var(--yellow-col2)"],
+  [3,"var(--yellow-col3)"],
+  [11,"hsla(0,0%,100%,0.2)",{
+    "sizes":[
+        ["--sub-arc",100,55,[5,5,2,5]]
+    ]
+  }],
+  [10,"hsla(0,0%,100%,0.2)"],
+  [9,"hsla(0,0%,100%,0.2)"],
+  [5,"hsla(0,0%,100%,0.2)"],
+  [5,"hsla(0,0%,100%,0.2)"],
+  [25],
+  [20,"url(#smoke-dots)"]
+],
+"patterns" : [
+  ["smoke-dots","dots","hsl(0,0%,10%)",0.8]
+],
+"sizes" : [
+  ["--sub-arc",100,55,[5,2,2,5]]
+]
+</svg>
+</nut-area>
+
+
+
+
+<hr>
+<div class="qr" style="
+position: relative;
+height: 200px;
+user-select: none;
+--nose-hsla:'33 100 60 0';
+">
+<div data-nose style="
+position: absolute;
+top: 0px;
+right: 0px;
+background-color: hsl(
+    var(--nose-h),
+    var(--nose-s),
+    var(--nose-l)
+);
+height: 200px;
+width: 200px;
+transform-origin: 100% 0%;
+transform: scale(0.4);
+clip-path: path('M 55 49 Q 61 28 62 8 Q 92 20 121 17 Q 117 45 121 72 Q 114 74 111 74 Q 107 83 108 99 Q 110 102 117 105.5 Q 125 103.5 130 103 Q 130 117 133 131 L 134.5 131 L 135 132 Q 141 129 146 127 Q 145 133 146 141 Q 153 141 163 137 Q 154 146 146 157 Q 137 156 127 157 Q 114 170 107 176 Q 102 170 98 167 Q 91 170 88 173 Q 81 152 83 134 L 91 136.5 Q 82 92 60 70 Q 61 65 63 59 Q 58 52 55 49 Z');
+">
+    <img id="hack" src="runningBox.png">
+</div>
+</div>
+</body>
+<script id="caps-script">
+((
+ // vars {
+ D = document,
+ O = Object,
+ A = O.assign,
+ J = JSON.parse,
+ E =(a,b,c)=>a.appendChild(A(D.createElement(b),c)),
+ L = (a,b,c,d={})=>a.addEventListener(b,c,d),
+ Q = (a,b) => a.querySelectorAll(b),
+ QFE = (a,b,c=()=>{})=>Q(a,b).forEach(c)
+ 
+ ,log = console.log
+ //}
+) => QFE(D, 'nut-area', (
+ // nut vars {
+ nut, k, _,
+ svg = nut.querySelector(
+     '#piconut, svg[data-nanutz]'
+ ),
+ infos = Q(nut,'[data-nutz-info]>div'),
+ capDiv = E(nut,'div',{className:'cap-area'}),
+ caps = []
+ //}
+) => {
+    
+    // have to adjust for pico version {
+    let picodats =
+        nut.id === 'pico-area' ?
+        J(`[${svg.innerHTML}]`)
+        : '';
+    // }
+    
+    // grap all the infos {
+    infos.forEach((div, i) => {
+        let
+        H = div.innerHTML,
+        idx = H.indexOf(':::');
+        if (idx >= 0) {
+            caps[i] = H.substring(0, idx);
+            div.innerHTML = H.substring(idx+3);
+        } else {
+            caps[i] = '';
+        }
+    });
+    //}
+    
+    // grap paths from svg's after load {
+    L(D,'DOMContentLoaded', () =>
+    QFE(svg,':scope > path',(arc, i) => {
+        
+        let pval = J(
+            arc.dataset.nanutz ||
+            `{"perc":${picodats[i][0]}}`
+        ).perc;
+        
+        let cap = E(
+            capDiv, 'div', { className: 'cap-hold' }
+        );
+    
+        let perc = E(cap, 'div', {
+            className: 'perc',
+            innerHTML: pval + '<sup>%</sup>'
+        });
+    
+        let title = E(cap, 'div', {
+            className: 'title',
+            innerHTML: '&nbsp;' +
+            (caps[i]==undefined?'':caps[i])
+        });
+    
+        arc.addEventListener('mouseover', e => {
+            cap.classList.toggle('over');
+            infos[i]?.classList.toggle('info-over');
+        });
+        arc.addEventListener('mouseout', e => {
+            cap.classList.toggle('over');
+            infos[i]?.classList.toggle('info-over');
+        });
+    }))
+    //}
+    
+    // do something on keypress {
+    svg.setAttribute('tabindex',k);
+        
+    L(svg, 'keydown', e => {
+        
+        if (e.key === 'c') {
+            capDiv.classList.toggle('hidden');
+        }
+        
+    });
+    //}
+    
+}))();
+    
+</script>
+</html>

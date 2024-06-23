@@ -1,0 +1,301 @@
+<!doctype html><html lang="en">
+<head><title>micro nutz</title>
+
+<script defer src="nanopicker.js"></script>
+<style id="doc-styles">
+
+@font-face {
+    font-family : luckiest;
+    src : url(luckiest.ttf);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #888;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.qr {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    font-size: 14px;
+    font-family: georgia;
+    text-align: justify;
+    color: #eee;
+}
+
+hr {
+    width: 400px;
+    border-top: 1px solid #fff;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin: auto;
+}
+
+em {
+    font-weight: bold;
+}
+
+pre {
+    max-height: 120px;
+    overflow: scroll;
+    padding: 10px;
+}
+
+</style>
+<style id="nut-styles">
+
+nut-area {
+    position: relative;
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    width: 400px;
+    height: 240px;
+    --red-col: hsl(20,100%,30%);
+    --green-col: hsl(120,80%,22%);
+    --yellow-col1: hsl(40,100%,50%);
+    --yellow-col2: hsl(40,100%,60%);
+    --yellow-col3: hsl(40,100%,70%);
+    --grey-col: hsl(0,0%,22%);
+    --lite-col: hsl(0,0%,90%);
+    --trans-dur: 300ms;
+    
+}
+
+nut-area > svg {
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    overflow: visible;
+    outline: none;
+    user-select: none;
+}
+
+nut-area pattern > path {
+    transition: all linear var(--trans-dur);
+}
+
+nut-area > svg > path {
+    vector-effect: non-scaling-stroke;
+    stroke-width: 3;
+    stroke: var(--grey-col);
+    transition: d linear var(--trans-dur),
+    transform linear var(--trans-dur);
+}
+
+nut-area > svg > path:hover {
+    transform: scale(1.1);
+}
+
+nut-area:nth-of-type(even) > svg {
+    left 0px;
+}
+
+nut-area:nth-of-type(odd) > svg {
+    right: 0px;
+}
+
+nut-area > span:nth-of-type(1) {
+    position: absolute;
+    bottom: 3px;
+    color: #eee;
+    font-style:italic;
+    font-size: 0.85em;
+    transition: opacity linear var(--trans-dur);
+    opacity: 0;
+}
+
+nut-area:nth-of-type(even) > span:nth-of-type(1) {
+    right: 10px;
+}
+
+nut-area:nth-of-type(odd) > span:nth-of-type(1)::after {
+    content : '...';
+}
+
+nut-area:nth-of-type(even) > span:nth-of-type(1)::before {
+    content : '...';
+}
+
+nut-area:hover > span {
+    opacity: 1;
+}
+
+nut-area:nth-of-type(even) > .cap-area {
+    left: 60px;
+}
+
+nut-area:nth-of-type(odd) > .cap-area {
+    right: 60px;
+}
+
+nut-area:nth-of-type(even) > [data-nutz-info] {
+    right: 0;
+}
+
+nut-area:nth-of-type(odd) > [data-nutz-info] {
+    left: 0;
+}
+
+</style>
+<style id="inf-styles">
+[data-nutz-info] {
+    position: absolute;
+    top: 0;
+    height: calc(100% - 20px);
+    width: 150px;
+    overflow: visible;
+}
+[data-nutz-info] > div {
+    position: absolute;
+    width: 150px;
+    color: hsl(0,0%,22%);
+    opacity: 0;
+    font-size: 10px;
+    transition: opacity linear var(--trans-dur);
+}
+[data-nutz-info] .info-over {
+    opacity: 1;
+}
+[data-nutz-info] pre {
+    font-size: 6px;
+    margin: 0;
+    overflow: hidden;
+}
+</style>
+<style id="cap-styles">
+nut-area .cap-area {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 65px;
+    height: 80px;
+    width: 80px;
+    z-index: 1;
+    pointer-events: none;
+}
+nut-area .cap-area.hidden {
+    display: none;
+}
+nut-area .cap-hold {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all linear var(--trans-dur);
+}
+nut-area .perc, .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: luckiest;
+    text-align: center;
+    white-space: nowrap;
+}
+nut-area .perc {
+    position: relative;
+    color: var(--lite-col);
+    font-size: 80px;
+}
+nut-area .perc sup {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: -5px;
+    color: var(--grey-col);
+    font-size: 20px;
+    font-weight: bold;
+}
+nut-area .title {
+    position: absolute;
+    padding-top: 35px;
+    color: var(--grey-col);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+}
+nut-area .over {
+    opacity: 1;
+    transform: scale(1);
+}
+</style>
+</head>
+<body>
+
+<div class="qr">
+<em>meecro nutz</em> how small can this be and still allow options?
+</div>
+<script defer src="micro.nutz.js">
+"selector" : "[data-retard]",
+"radius" : 0.9,
+"hole" : 0.77
+</script>
+<nut-area>
+<style>
+.opts-path {
+    stroke-width: 8;
+    stroke: #fff;
+}
+</style>
+<svg data-nutz>
+[60,"var(--red-col)",{
+    "radius" : 1.20,
+    "hole" : 0.4,
+    "id" : "red-pill",
+    "class" : "opts-path"
+}],
+[30,"var(--green-col)"],
+[10,"var(--yellow-col1)"]
+</svg>
+</nut-area>
+<hr>
+
+<nut-area>
+<svg data-retard>
+[31,"var(--red-col)"],
+[60,"var(--green-col)"],
+[3,"var(--yellow-col1)"],
+[3,"var(--yellow-col2)"],
+[3,"var(--yellow-col3)"]
+</svg>
+</nut-area>
+
+
+<div class="qr" style="
+position: relative;
+height: 200px;
+user-select: none;
+--nose-hsla:'33 100 60 0';
+">
+<div data-nose style="
+position: absolute;
+top: 0px;
+right: 0px;
+background-color: hsl(
+    var(--nose-h),
+    var(--nose-s),
+    var(--nose-l)
+);
+height: 200px;
+width: 200px;
+transform-origin: 100% 0%;
+transform: scale(0.4);
+clip-path: path('M 55 49 Q 61 28 62 8 Q 92 20 121 17 Q 117 45 121 72 Q 114 74 111 74 Q 107 83 108 99 Q 110 102 117 105.5 Q 125 103.5 130 103 Q 130 117 133 131 L 134.5 131 L 135 132 Q 141 129 146 127 Q 145 133 146 141 Q 153 141 163 137 Q 154 146 146 157 Q 137 156 127 157 Q 114 170 107 176 Q 102 170 98 167 Q 91 170 88 173 Q 81 152 83 134 L 91 136.5 Q 82 92 60 70 Q 61 65 63 59 Q 58 52 55 49 Z');
+">
+    <img id="hack" src="runningBox.png">
+</div>
+</div>
+</body>
+</html>

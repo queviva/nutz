@@ -1,0 +1,502 @@
+<!doctype html><html lang="en">
+<head><title>donor donutz</title>
+<script defer src="nutz.ucla.js"></script>
+<script defer src="nanopicker.js"></script>
+<style id="docStyles">
+
+@font-face {
+    font-family : luckiest;
+    src : url(luckiest.ttf);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #888;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.qr {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    font-size: 14px;
+    font-family: georgia;
+    text-align: justify;
+    color: #eee;
+}
+
+hr {
+    width: 400px;
+    border-top: 1px solid #fff;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin: auto;
+}
+
+table {
+    margin:auto;
+    border-color: var(--darkness);
+    border-collapse: collapse;
+    font-size: 12px;
+    width: 400px;
+}
+
+</style>
+<style id="nutAreaStyles">
+
+nut-area {
+    position: relative;
+    display: block;
+    margin: auto;
+    width: 400px;
+    height: 240px;
+    margin: auto;
+    padding: 20px;
+}
+
+nut-area > svg[data-nutz] {
+    position: absolute;
+    overflow: visible;
+    top: 20px;
+    right: 20px;
+    height: 200px;
+    width: 200px;
+    transition: transform linear 200ms;
+    user-select: none;
+}
+
+nut-area > svg[data-nutz] > path {
+    stroke-width: 3;
+    stroke: #fff;
+    vector-effect: non-scaling-stroke;
+    transform: scale(1);
+    transition: transform linear 200ms, fill linear 200ms;
+}
+
+nut-area > svg[data-nutz] > path:hover {
+    transform: scale(1.1);
+}
+
+nut-area:nth-of-type(odd) > svg[data-nutz] {
+    right: 0px;
+}
+
+nut-area:nth-of-type(even) > svg[data-nutz] {
+    left: 10px;
+}
+
+nut-area > .cap {
+    font-family: luckiest;
+    position: absolute;
+    top: 10px;
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all linear 400ms;
+    max-width: 150px;
+}
+
+nut-area:nth-of-type(odd) > .cap {
+    left: 10px;
+}
+
+nut-area:nth-of-type(even) > .cap {
+    right: 10px;
+}
+
+nut-area > span {
+    position: absolute;
+    bottom: 3px;
+    color: #eee;
+    font-style:italic;
+    font-size: 0.85em;
+    transition: opacity linear 200ms;
+    opacity: 0;
+}
+
+nut-area:hover span {
+    opacity: 1;
+}
+
+nut-area:nth-of-type(odd) > span {
+    left: 10px;
+}
+
+nut-area:nth-of-type(even) > span {
+    right: 10px;
+}
+
+</style>
+</head>
+
+<body>
+    
+<svg id="patternSVG"
+ style="height:0;width:0;"
+>
+  <defs>
+    <pattern id="dots" width="2" height="2"
+     patternTransform="rotate(45) scale(0.3)"
+     patternUnits="userSpaceOnUse"
+    >
+      <circle r="0.5" cx="1" cy="1"
+        fill="var(--dots-col, hsl(40,100%,95%))"
+      />
+    </pattern>
+  </defs>
+</svg>
+
+<div class="qr">
+About a hundred buildings make up all of the
+places in which UCLA holds classes.
+Some are named after a location or address,
+and some are simply called by a subject
+taught or researched there.
+But sixty two of them - just over two thirds -
+have the name of some person.
+</div>
+<nut-area><span>buildings named after...</span>
+<svg id="nut0" data-nutz='[
+    [67.4,"hsl(100,100%,25%)","Person"],
+    [25,"hsl(20,100%,30%)","Subject"],
+    [7.6,"hsl(40,100%,50%)","Location"]
+ ]'
+ data-nutz-opts='{
+    "init" : -25
+ }'
+/>
+</nut-area>
+
+<div class="qr">
+While a few take their names from
+athletes or politicians,
+most of the named-buildings honor
+faculty or administrators,
+and ofcourse, wealthy donors.
+</div>
+<nut-area><span>...why this person</span>
+<svg data-nutz='[
+    [50.8,"hsl(100,100%,25%)","Donor"],
+    [39.7,"hsl(20,100%,30%)","Faculty<br>&Admin"],
+    [4.8,"hsl(40,100%,50%)","Athlete"],
+    [3.2,"hsl(40,100%,70%)","Athlete/<br>Politician"],
+    [1.6,"hsl(40,100%,90%)","Politician"]
+ ]'
+ data-nutz-opts='{
+    "init" : -25
+ }'
+/>
+</nut-area>
+
+<div class="qr">
+Over the last several decades, taquitos
+have made up about twenty percent of alumni,
+while chop&#8209;stix made up about a third.
+<br><br>
+Of the buildings named after people,
+zero have street-vendor names and only
+one knows kung&#8209;fu.
+<br><br>
+Two building names honor watermelandres,
+and one of them was named after an
+exessive-cologne donor.
+</div>
+<nut-area><span>soup du jour...</span>
+<svg data-nutz='[
+    [4.8,"hsl(20,40%,60%)","Vegan?"],
+    [25.4,"hsl(20,100%,30%)","Soy Latte"],
+    [36.5,"hsl(100,100%,25%)","Pizza"],
+    [7.9,"hsl(100,20%,60%)","Maybe?"],
+    [3.2,"hsl(40,100%,20%)","Chicken|Waffle<br></svg>House|Mc Rib"],
+    [3.2,"hsl(40,100%,50%)","Fry Sauce"],
+    [4.8,"hsl(40,100%,60%)","Pastrami"],
+    [1.6,"hsl(40,100%,70%)","Cologne"],
+    [1.6,"hsl(40,100%,80%)","Chop Stix"],
+    [1.6,"hsl(40,100%,90%)","Oatmeal"],
+    [9.4,"url(#dots)","all<br>other"]
+ ]'
+ data-nutz-opts='{
+    "init" : -28
+ }'
+/>
+</nut-area>
+
+<div class="qr">
+What about <i>just donors</i>, though?
+Only the buildings named after people
+who donated so much money that entire buildings,
+schools, institutes, and centers carry their names
+- how do those break down?
+</div>
+<nut-area><span>...of just donors</span>
+<svg id="nutspin" data-nutz='[
+    [9.7,"hsl(20,100%,30%)","Latte|Vegan|PB&J"],
+    [58.1,"hsl(100,100%,25%)","Bagel|Pizza|Pizza<br>Oven|Matzo<br>Ball|Gefilta"],
+    [3.2,"hsl(100,20%,60%)","Maybe?"],
+    [3.2,"hsl(40,100%,60%)","Pastrami"],
+    [3.2,"hsl(40,100%,70%)","Cologne"],
+    [3.2,"hsl(40,100%,80%)","Chop-Stix"],
+    [9.7,"url(#dots)","All<br>Other"],
+    [9.7,"hsl(20,40%,60%)","Soy?"]
+ ]'
+ data-nutz-opts='{
+    "init" : -25
+ }'
+/>
+</nut-area>
+<br>
+
+<hr>
+<div id="pendix" style="display:none">
+<style>#pendix > div, table { color: #333 };</style>
+<div class="qr">
+APPENDIXIS:
+            <p>
+Three buildings [ENGINEERING IV, V, & VI]
+are subject-named but actually house the
+<i>Samueli</i> school and were funded
+by that donation. They are considered here
+as only <i>one</i> building, with the donor's name.
+The two <i>Young</i> buildings are named
+after different people, one of whom is
+named <i>Gould</i>.
+Some buildings had double entries for different
+parts or wings of the same building; those were
+removed.
+'Field' and 'No Facility' were also removed.
+These were given by the registrar as
+the names of all the locations
+in which a class could take place:
+<li style="list-style-type:circle;font-size:0.7em"><i>
+https://registrar.ucla.edu/faculty-staff/classrooms-and-scheduling/building-list</i>
+        </li>
+
+</div>
+<table id="tabula" border="1"></table>
+<div class="qr" style="color:#333;">
+racist breakdown of population:<br>
+<li style="list-style-type:circle;font-size:0.7em">
+<i>
+https://www.ucla.edu/about/facts-and-figures
+</i>
+</li>
+</div>
+<hr>
+</div>
+<div class="qr" data-nose style="
+    text-align:right;
+    user-select:none;
+    --nose-hsla : '20 100 30 1';
+    --body-color: hsla(
+        var(--nose-h),
+        var(--nose-s),
+        var(--nose-l),
+        var(--nose-a)
+    );
+    --shadow-color: hsla(
+        var(--nose-h),
+        var(--nose-s),
+        calc(1*var(--nose-l)),
+        0.5
+    )
+">
+    <svg
+     xmlns="http://www.w3.org/2000/svg"
+     style="
+        width: 150px;
+        height: 200px;
+     "
+     viewBox="0 0 150 200"
+        
+    onclick="
+        pendix.style.display =
+        pendix.style.display === 'none' ?
+        'block' : 'none';
+    ">
+    <use xlink:href="abe.svg#ikon"/>
+    </svg>
+</div>
+
+</body>
+<script id="donut-config">
+
+const log = console.log;
+
+document.addEventListener('DOMContentLoaded',e=>{
+    
+    document.querySelectorAll('svg[data-nutz]').forEach(SVG => {
+        
+        JSON.parse(SVG.dataset.nutz).forEach((arc, i) => {
+    
+            let cap = document.createElement('div');
+            cap.classList.add('cap');
+            cap.innerHTML = arc[2] + '<br>' + arc[0] + '%';
+            SVG.parentElement.append(cap);
+            
+            let p = SVG.children[i];
+            p.addEventListener('mouseover', e => {
+                cap.style.opacity = 1;
+                cap.style.transform = 'scale(1)'
+            });
+            p.addEventListener('mouseout', e => {
+                cap.style.opacity = 0;
+                cap.style.transform = 'scale(0.8)'
+            });
+            
+            if (arc[2].match(/\|/)) {
+                
+            let slurs = arc[2].split('|');
+            let len = slurs.length - 1;
+            
+            p.addEventListener('mouseover', e => {
+                slurs = [
+                    ...slurs.splice(
+                        1+~~(Math.random()*len), 1
+                    ),
+                    ...slurs
+                ];
+                
+                cap.innerHTML = slurs[0] +
+                '<br>' + arc[0] + '%';
+                
+            });
+                
+            }
+            
+        });
+        
+        SVG.childNodes.forEach(arc => {
+            arc.addEventListener('mouseover', e => {
+                SVG.append(arc);
+            });
+        });
+        
+        SVG.nutTurn = 0;
+        SVG.addEventListener('click', e => {
+            if (e.ctrlKey) {
+                SVG.style.transform = 'rotate(' +
+                    (SVG.nutTurn +=
+                    (e.shiftKey ? 1 : -1) * 27)
+                +'deg)';
+            }
+        });
+        
+    });
+
+});
+</script>
+<script id="table-builder">
+const tabula = document.getElementById('tabula');
+`BUILDING,TYPE,REASON,RACISM
+700 Westwood Plaza,location,-,-
+Marion Anderson Hall,name,donor,goy
+Ackerman Student Union,name,athlete,jew
+Biomedical Sciences Bldg,subject,-,-
+Brain Mapping Center,subject,-,-
+Boelter (Kraus) Hall,name,faculty/admin,maybe
+Botany Building,subject,-,-
+Boyer Hall,name,faculty/admin,mormon
+Bradley Hall,name,politician,black
+Brain Research Institute,subject,-,-
+Broad Art Center,name,donor,jew
+Bunche Hall,name,athlete/politician,baptized
+Campbell Hall,name,faculty/admin,goy
+Carnesale Commons,name,faculty/admin,bronx
+William Andrews Clark Library,name,donor,goy
+California NanoSystems Institute,subject,-,-
+Collins Center ,name,donor,goy?
+Cornell Hall,name,donor,hamburger
+Covel Commons,name,faculty/admin,goy
+Canyon Point,location,-,-
+De Neve Plaza ,location,-,-
+School of Dentistry,subject,-,-
+Dodd Hall,name,faculty/admin,maybe
+Dykstra Hall,name,faculty/admin,goy
+Engineering (Samueli) IV V VI,subject,donor,jew
+Entrepreneurs Hall,subject,-,-
+Factor Bldg,name,donor,jew
+Fernald Center,name,faculty/admin,jersey
+Field,location,-,-
+Fowler Museum,name,donor,maybe
+Franz Hall,name,faculty/admin,maybe
+Geffen Hall,name,donor,jew
+Geology Building,subject,-,-
+Gold Hall,name,donor,jew
+Wendy and Leonard Goldberg ,name,donor,jew
+Gonda (Goldschmied),name,donor,jew
+Graduate School of Education ,subject,-,-
+Haines Hall,name,athlete/politician,goy
+Hedrick Hall,name,faculty/admin,goy
+Hershey Hall,name,donor,goy?
+Center for the Health Sciences,subject,-,-
+Kaplan Hall,name,donor,jew
+Kaufman Hall,name,donor,jew
+Kerckhoff Hall,name,donor,german?
+Kinsey Pavilion,name,faculty/admin,goy
+Knudsen Hall,name,faculty/admin,mormon
+Korn Convocation Hall,name,donor,jew
+Lab School 1,subject,-,-
+La Kretz Hall,name,donor,jew
+Law Building,subject,-,-
+Life Sciences,subject,-,-
+Lu Valle Commons,name,athlete,black
+MacDonald Lab,name,donor,irish
+Macgowan Hall,name,faculty/admin,irish
+Vatche and Tamar Manoukian Bld,name,donor,armenian
+Marion Davies Children's Center,name,donor,brooklyn
+Melnitz Hall,name,faculty/admin,jew
+Molecular Sciences Building,subject,-,-
+Moore Hall,name,faculty/admin,goy
+Morton Medical Building,name,donor,jew
+Mathematical Sciences,subject,-,-
+Murphy Hall ,name,faculty/admin,irish
+Neuroscience Research Building,subject,-,-
+Northwest Campus Auditorium,location,-,-
+Olympic Hall,location,-,-
+Orthopedic Hospital,subject,-,-
+Ostin Music Center,name,donor,jew
+Physics and Astronomy Building,subject,-,-
+Perloff Hall,name,faculty/admin,jew
+Portola Plaza Building,location,-,-
+Powell Library,name,faculty/admin,quaker
+Pritzker Hall ,name,donor,jew
+Public Affairs Building,subject,-,-
+School of Public Health,subject,-,-
+Ueberroth Building,name,donor,goy?
+Reed Center,name,donor,goy
+Rieber Hall,name,faculty/admin,maybe
+Rosenfeld Library,name,donor,jew
+Rolfe Hall,name,faculty/admin,goy
+Royce Hall,name,faculty/admin,goy
+Student Activities Center,subject,-,-
+Sculpture Garden,location,-,-
+Semel Institute,name,donor,jew
+Slichter Hall,name,faculty/admin,jew
+Schoenberg Music Building,name,faculty/admin,jew
+Sproul Hall,name,faculty/admin,goy
+Terasaki Life Sciences Building,name,donor,oriental
+UCLA Lab School,subject,-,-
+Wasserman Building,name,donor,jew
+James West Alumni Center,name,donor,goy
+Young (Gould) Hall,name,donor,jew
+Wooden Rec Denter,name,athlete,goy
+Young Library,name,faculty/admin,goy`
+.split('\n').forEach(val => {
+    let tr = tabula.insertRow();
+    val.split(',').forEach((e, i) => {
+        //let td = tr.insertCell(i);
+        //td.innerHTML = e;
+        tr.insertCell(i).innerHTML = e;
+    })
+})
+</script>
+</html>

@@ -1,0 +1,527 @@
+<!doctype html><html lang="en">
+<head><title>donutz</title>
+<script defer src="nutz.js"></script>
+<script defer src="nutz.nano.js" data-x='{"selector":"nanutz"}'></script>
+<script defer src="nanopicker.js"></script>
+<style id="docStyles">
+
+@font-face {
+    font-family : luckiest;
+    src : url(luckiest.ttf);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #888;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.qr {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+    font-size: 14px;
+    font-family: georgia;
+    text-align: justify;
+    color: #eee;
+}
+
+hr {
+    width: 400px;
+    border-top: 1px solid #fff;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin: auto;
+}
+
+table {
+    margin:auto;
+    border-color: var(--darkness);
+    border-collapse: collapse;
+    font-size: 12px;
+    width: 400px;
+}
+
+</style>
+<style id="nutAreaStyles">
+
+nut-area {
+    position: relative;
+    display: block;
+    margin: auto;
+    width: 400px;
+    height: 240px;
+    margin: auto;
+    padding: 20px;
+}
+
+svg[data-nutz] {
+    position: absolute;
+    overflow: visible;
+    top: 20px;
+    right: 20px;
+    height: 200px;
+    width: 200px;
+    transition: transform linear 200ms;
+    user-select: none;
+}
+
+svg[data-nutz] .nutz-path {
+    stroke-width: 3;
+    stroke: #fff;
+    vector-effect: non-scaling-stroke;
+    transform: scale(1);
+    transition: transform linear 200ms;
+    xd: path(var(--norm-arc));
+}
+
+svg[data-nutz] .nutz-path:hover {
+    transform: scale(1.1);
+    xd: path(var(--full-arc));
+}
+
+nut-area:nth-of-type(even) .nutz-path {
+    stroke: #333;
+}
+
+nut-area:nth-of-type(even) .nutz-cap,
+nut-area:nth-of-type(even) > span {
+    right: 10px;
+}
+
+nut-area:nth-of-type(even) svg[data-nutz] {
+    left: 10px;
+}
+
+nut-area .nutz-cap {
+    font-family: luckiest;
+    position: absolute;
+    top: 10px;
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all linear 400ms;
+    max-width: 150px;
+}
+
+nut-area .nutz-cap-over {
+    opacity: 1;
+    transform: scale(1);
+}
+
+nut-area > span {
+    position: absolute;
+    bottom: 3px;
+    color: #eee;
+    font-style:italic;
+    font-size: 0.85em;
+    transition: opacity linear 200ms;
+    opacity: 0;
+}
+
+nut-area:nth-of-type(odd) span:after {
+    content : '...';
+}
+
+nut-area:nth-of-type(even) span:before {
+    content : '...';
+}
+
+nut-area:hover > span {
+    opacity: 1;
+}
+
+</style>
+</head>
+
+<body>
+    
+<div class="qr">
+What might be the smallest, most useful,
+script for creating <i>donut</i> charts?
+If you make an <i>svg</i> tag whose
+<i>data-nutz</i> param, has
+a list of percents and colors,
+<b>nutz.js</b> will read through
+a page and create the appropriate chart.
+All of its parts can then be styled with css
+and controlled with javascript.
+</div>
+<nut-area><span>of just donors</span>
+<svg id="nutty" data-nutz='[
+    [-5],
+    [9.7,"hsl(20,100%,30%)",{"cap":"Latte|Vegan|PB&J"}],
+    [58.1,"hsl(100,100%,25%)",{"cap":"Bagel|Pizza|Pizza<br>Oven|Matzo<br>Ball|Gefilta"}],
+    [3.2,"hsl(100,20%,60%)",{"cap":"Maybe?"}],
+    [3.2,"hsl(40,100%,60%)",{"cap":"Pastrami"}],
+    [3.2,"hsl(40,100%,70%)",{"cap":"Cologne"}],
+    [3.2,"hsl(40,100%,80%)",{"cap":"Chop-Stix"}],
+    [9.7,"url(#wotz)",{"cap":"All<br>Other"}],
+    [9.7,"hsl(20,40%,60%)",{"cap":"Soy?"}]
+ ]'
+ data-nutz-opts='{
+    "patterns":[["dots","hsl(40,100%,95%)","wotz"]]
+ }'
+/>
+</nut-area>
+
+<div class="qr">
+This is a second example so you can see
+more than one at a time
+</div>
+<nut-area><span>of wacky values</span>
+<style>
+#reg {
+    transition: all linear 300ms;
+}
+#reg:hover {
+    transform: scale(1.1);
+    d: path(var(--full-arc));
+}
+#hag {
+    transition: all linear 300ms;
+}
+#hag:hover {
+    transform: scale(1);
+    d: path(var(--big-arc));
+}
+</style>
+<svg data-nutz='[
+ [2.5],
+ [35,"url(#chex)",{"id":"chig","cap":"One|Two<br>face|Three"}],
+ [18,"hsl(20,100%,30%)",{"id":"reg","cap":"up|dn|lf|rt"}],
+ [10],
+ [34,"url(#hatz)",{
+    "id":"hag",
+    "hole":0.35,
+    "cap":"howie"
+ }]]'
+ data-nutz-opts='{
+    "init" : -10,
+    "hole" : 0.5,
+    "patterns" : [
+        ["dots","#333","dotz",1.0],
+        ["hatch","var(--hatz-col)","hatz",1.0,"#c30"],
+        ["check","#909","chex",0.4]
+    ]
+ }'
+ data-nose
+ style="
+    --nose-hsla : '40 100 50 1';
+    --hatz-col : hsl(
+        var(--nose-h),
+        var(--nose-s),
+        var(--nose-l)
+    )
+ "
+/>
+</nut-area>
+
+<div class="qr">
+if you are willing to create everything else
+yourself, <b>nutz.nano.js</b> is an incredibly
+small script that will draw a donut chart whose
+parts can all be manipulated and styled
+</div>
+<nut-area id="swednut">
+<style>
+#nutholder {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+}
+#swednut {
+    --nose-hsla : '28 100 50 1';
+    --swed-col: var(--nose-h);
+    opacity: 0.8;
+    xfilter: url(#noiz);
+
+}
+#swednut svg {
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    overflow: visible;
+}
+#swed .nanutz-path {
+    stroke: #fff;
+    stroke-width : 3;
+    vector-effect: non-scaling-stroke;
+    transform: scale(1);
+    transition: all linear 300ms;
+}
+#swed .nanutz-path:hover {
+    transform: scale(1.1);
+    stroke: hsl(var(--swed-col),80%,20%);
+}
+#swed #pank:hover {
+    transform: scale(1);
+    d: path(var(--full-pie));
+}
+#swednut #capholder {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 80px;
+    top: 60px;
+    left: 60px;
+    xborder: 2px solid hsl(var(--swed-col),80%,20%);
+    xborder-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    transition: all linear 300ms;
+}
+#swednut .cap {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all linear 300ms;
+}
+#swednut .cap-hover {
+    opacity: 1;
+    transform: scale(1);
+}
+#swednut .perc,
+#swednut .title {
+    position: absolute;
+    font-family: luckiest;
+    font-size: 5.5em;
+    color: #fff;
+    white-space: nowrap;
+    padding-top: 15px;
+}
+#swednut .title {
+    font-size: 0.6em;
+    color: hsl(var(--swed-col),80%,20%);
+    padding-top: 30px;
+    letter-spacing:3px;
+}
+#swednut .perc {
+    padding-left: 0.1em;
+    -webkit-text-stroke: 1.2px hsl(var(--swed-col),80%,20%) ;
+}
+#swednut .perc sup {
+    font-size:0.2em;
+    color: hsl(var(--swed-col),80%,20%);
+    -webkit-text-stroke: 0px;
+}
+#swedboard {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 10px;
+    top: 95px;
+    left: 50px;
+    z-index:2;
+}
+#swedboard div {
+    position: absolute;
+    width: 100%;
+    max-height: 100px;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: justify;
+    x-webkit-text-stroke: 0.2px #fff;
+    xcolor: hsl(var(--swed-col),80%,20%);
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all linear 300ms;
+}
+#swedboard .board-hover {
+    transform: scale(1);
+    opacity: 1;
+}
+</style>
+<span>swedish death</span>
+<div id="nutholder">
+<div id="swedboard">
+    <div>
+        you can literally die from a broken
+        heart - though that's stupid
+    </div>
+    <div>
+        the good news is, you won't know
+        why you're dying
+    </div>
+    <div>
+        row, row, row your boat,
+        gently down the stream,
+        merrily, merrily, merrily, merrily,
+        what a dream boat!
+    </div>
+    <div>
+        these are mostly getting to be
+        heart disease
+    </div>
+    <div>
+        breath that sweet, sweet, smoke
+        deep into your lungs
+    </div>
+    <div>
+        <center>remember to</center>
+        let me examine those<br>
+        when I meet you randomly in an
+        elevator
+    </div>
+    <div>
+        whatever's lodged up there has
+        arranged itself in a horizontal
+        orientation
+    </div>
+    <div>
+        <center>
+        the long history of<br>
+       vaping began last week<br>
+       let me tell you the story<br>
+          of darth vapor
+        </center>
+    </div>
+    <div>
+        the best <i>kind</i> of tension
+    </div>
+    <div>
+        Times have changed a lot.
+        <br><br>
+        When I was a kid, we had to say
+        that the two women down the street,
+        who were living together,
+        were "<i>very special</i> friends."
+        <br><br>
+        Nowadays, it's perfectly acceptible
+        to say that a man "has pancreatic
+        cancer."
+    </div>
+</div>
+<div id="capholder"></div>
+<svg id="swed" data-nose="#swednut"
+data-nanutz='[
+    [0.1],
+    [26,"hsl(var(--swed-col),90%,25%)",{"id":"heart","cap":"heart disease"}],
+    [24,"hsl(var(--swed-col),100%,30%)",{"cap":"dementia"}],
+    [12,"hsl(var(--swed-col),100%,37%)",{"cap":"stroke"}],
+    [9,"hsl(var(--swed-col),100%,44%)",{"cap":"pulmonary thrombosis"}],
+    [7,"hsl(var(--swed-col),100%,51%)",{"cap":"lung cancer"}],
+    [5,"hsl(var(--swed-col),100%,58%)",{"cap":"breast cancer"}],
+    [5,"hsl(var(--swed-col),100%,65%)",{"cap":"colon cancer"}],
+    [5,"hsl(var(--swed-col),100%,72%)",{"cap":"respiratory illness"}],
+    [4,"url(#swedots)",{"cap":"hypertension"}],
+    [3,"url(#swehatch)",{
+        "id":"pank",
+        "cap":"pancreatic cancer",
+        "sizes":[[22,9.5,"--full-pie"]]
+    }]
+]' data-nanutz-opts='{
+    "hole" : 0.55,
+    "xxxsizes" : [
+        [20,0,"--full-arc"],
+        [22,11,"--big-arc"]
+    ],
+    "patterns" : [
+        ["dots","hsl(var(--swed-col),100%,79%)","swedots",0.5,"hsl(var(--swed-col),90%,25%)"],
+        ["wave","hsl(var(--swed-col),100%,86%)","swehatch",0.5,"hsl(var(--swed-col),90%,25%)"]
+        
+    ]
+}'
+>
+  <defs>
+    <pattern id="ddotz" width="2" height="2"
+     patternTransform="rotate(45) scale(0.4)"
+     patternUnits="userSpaceOnUse">
+      <path d="M0 0H2V2H0Z" fill="hsl(var(--swed-col),90%,25%)"/>
+      <circle r="0.5" cx="1" cy="1" fill="hsl(var(--swed-col),100%,85%)"/>
+    </pattern>
+    <filter id='dnoiz'>
+      <feTurbulence
+        type='fractalNoise'
+        baseFrequency='1'
+        numOctaves='3'
+        stitchTiles='stitch'/>
+    </filter>
+  </defs>
+</svg>
+</div>
+<script id="swedSetup">
+document.addEventListener('DOMContentLoaded',e=>{
+
+    const log = console.log;
+
+    let list = JSON.parse(swed.dataset.nanutz)
+    .filter(v => v[2]);
+    
+    swed.querySelectorAll('.nanutz-path')
+    .forEach((arc, i) => {
+        
+        let cap = capholder.appendChild(
+            document.createElement('div')
+        );
+        cap.classList.add('cap');
+        
+        let perc = cap.appendChild(
+            document.createElement('div')
+        );
+        perc.classList.add('perc');
+        perc.innerHTML = list[i][0]
+        +'<sup>%<sup>';
+        
+        let title = cap.appendChild(
+            document.createElement('div')
+        );
+        title.classList.add('title');
+        title.innerHTML = list[i][2].cap||'err';
+        
+        arc.addEventListener('mouseover', e => {
+            cap.classList.toggle('cap-hover');
+            arc.parentElement.append(arc);
+          //capholder.style.borderWidth = '0px';
+        });
+        arc.addEventListener('mouseout', e => {
+            cap.classList.remove('cap-hover');
+          //capholder.style.borderWidth = '2px';
+        });
+        
+        let boards = swedboard.querySelectorAll('div');
+        let brd = boards[i];
+        
+        arc.addEventListener('click', e => {
+            boards.forEach(b => {
+                (b === brd)||b.classList.remove('board-hover');
+            });
+            brd.classList.toggle('board-hover');
+            cap.classList.toggle('cap-hover');
+        });
+        swed.addEventListener('mouseout', e => {
+            boards.forEach(b => {
+                b.classList.remove('board-hover');
+            });
+        });
+    });
+    
+});
+</script>
+</nut-area>
+
+
+<hr>
+<div class="qr" style="text-align:right;">
+    <img src="abe.png" style="height:80px;"/>
+</div>
+</body>
+</html>
