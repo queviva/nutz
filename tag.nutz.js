@@ -1,7 +1,6 @@
 // uses custome html tags and parameters
 ((
     
-// doc vars & methods {
  D=document,
  O=Object,
  A=O.assign,
@@ -35,45 +34,43 @@
  H=(d,f)=>`<path d="${d}" fill="${f}" />`,
  CED = v => customElements.define(v, class extends HTMLElement{}),
  ATTS = a => O.fromEntries(a.getAttributeNames().map(v=>[v,a.getAttribute(v)])),
- // img loader {
  MIG=(def,[id,url,scl])=>def.innerHTML+=`<pattern id=${id} width=1 height=1><image href="${url}" transform="scale(${scl||1})"/></pattern>`,
- //}
- // pattern matcher {
- PAT=(def,[id,typ,col,y=1.3,z],[bak,scl]=CSS.supports('color',y)?[y,z||1.3]:[z,y])=>def.innerHTML+=`<pattern id=${id} width=2 height=2 patternUnits=userSpaceOnUse patternTransform="rotate(45) scale(${scl})">${(bak?H("M0 0H2V2H0Z",bak):'')+H({dots:'M0 1A.5 .5 0 1 1 0 1.1Z',xdots:'M0 1A.5 .5 0 1 1 0 1.1V2H2V0H0Z',cross:'M0 0V2H2V1.75H.25V0Z',xcross:'M2 0V1.75H.25V0Z',hatch:'M0 0 V2H1V0Z',check:'M0 0H1V2H2V1H0Z',strip:'M.5 0H1.5L0 1.5V.5ZM2 .5V1.5L1.5 2H.5Z',love:'M2 2H1.2A.3 .3 0 0 1 1.2 1.2A.3 .3 0 0 1 2 1.2Z',stix:'M0 0H.25V.5H1.25V1.25H1V.75H0ZM.5 0H1.25V.25H.75V1.25H0V1H.5Z',xstix:'M2 2H0V1.25H.75V.75H1V1.25H1.25V.5H.75V.25H1.25V0H2ZM0 .75H.5V1H0ZM.25 0V.5H.5V0Z',
- 
+ PAT=(def,[id,typ,col,y=1.3,z],[bak,scl]=CSS.supports('color',y)?[y,z||1.3]:[z,y])=>def.innerHTML+=`<pattern id=${id} width=2 height=2 patternUnits=userSpaceOnUse patternTransform="rotate(45) scale(${scl})">${(bak?H("M0 0H2V2H0Z",bak):'')+H({
+ dots:'M0 1A.5 .5 0 1 1 0 1.1Z',
+ xdots:'M0 1A.5 .5 0 1 1 0 1.1V2H2V0H0Z',
+ cross:'M0 0V2H2V1.75H.25V0Z',
+ xcross:'M2 0V1.75H.25V0Z',
+ hatch:'M0 0 V2H1V0Z',
+ check:'M0 0H1V2H2V1H0Z',
+ strip:'M.5 0H1.5L0 1.5V.5ZM2 .5V1.5L1.5 2H.5Z',
+ love:'M2 2H1.2A.3 .3 0 0 1 1.2 1.2A.3 .3 0 0 1 2 1.2Z',
+ stix:'M0 0H.25V.5H1.25V1.25H1V.75H0ZM.5 0H1.25V.25H.75V1.25H0V1H.5Z',
+ xstix:'M2 2H0V1.25H.75V.75H1V1.25H1.25V.5H.75V.25H1.25V0H2ZM0 .75H.5V1H0ZM.25 0V.5H.5V0Z',
  ostars:`M.13 .13L1.8 1L0 1.23L1.23 0L1 1.8Z`,
  pstars:`M.06 .06L.9 .5L0 .615L.615 0L.5 .9Z`,
  ystars:`M.1 .1L.71 0L.99 .55L.55 .99L0 .71Z`,
  zstars:`M.1 .1L.99 .55L0 .71L.71 0L.55 .99Z`,
  stars:`M.15 .15L1.48 .83L0 1.06L1.06 0L.83 1.48Z`,
- xstars:`M0 0L.15 .15L.65 .41L1.06 0L.97 .56L1.47 .82L.91 .91L.82 1.47L.56 .97L0 1.06L.41 .65
- L.15 .15L0 0V2H2V0Z`
-     
+ xstars:`M0 0L.15 .15L.65 .41L1.06 0L.97 .56L1.47 .82L.91 .91L.82 1.47L.56 .97L0 1.06L.41 .65 L.15 .15L0 0V2H2V0Z`
      
  }[typ]||typ,col)}</pattern>`
- //}
  
  //DEBUGG
  ,log = console.log
 
-//}
-
 ) => {
  
- // create the custome tags {
  CED(`${NUT}-arc`);
  CED(`${NUT}-cap`);
  CED(P.tag);
- //}
     
  D.querySelectorAll(P.tag).forEach((n,j)=>{
     
-    // nut init {
     let
     
     NUTj = NUT+j;
     G=-25,
-    Q=A({},{radius:P.radius,hole:P.hole,gaps:P.gaps },ATTS(n)),
+    Q=A({},{radius:P.radius,hole:P.hole,gaps:P.gaps},ATTS(n)),
     [w,x,y,z]=[0,0,...M(G)];
     svg=NS(n,'svg',{
         'viewBox' : '-100 -100 200 200'
@@ -100,11 +97,9 @@
           transform: scale(1);
       }
     `});
-    //}
     
     n.querySelectorAll(`${NUT}-arc`).forEach((
         
-        //arc vars & methods {
         arc,i,_,
         attrs = ATTS(arc),
         v=A({},{
@@ -121,18 +116,14 @@
         X=[w,x,y,z]=[y,z,...M(G+=c)],
         f=c>50?1:0,
         Z=(a,b,D=[0,0,0,0],[r1,r2]=[a-D[0],b+D[3]])=>{return `M${r2*w-D[1]*x} ${r2*x+D[1]*w}A${r2} ${r2} 0 ${f} 1 ${r2*y+D[2]*z} ${r2*z-D[2]*y}L${r1*y+D[2]*z} ${r1*z-D[2]*y}A${r1} ${r1} 0 ${f} 0 ${r1*w-D[1]*x} ${r1*x+D[1]*w}Z`}
-        //}
     
     ) => {
 
-        // skip if necessary {
         if (attrs.skip !== undefined) {
             n.removeChild(arc);
             return;
         }
-        //}
         
-        // make arcObj and transfer attributes {
         
         attrs.id = v.id;
         
@@ -145,16 +136,11 @@
         
         arcObj.classList.add(`${NUT}-arc`);
             
-        //}
-        
-        // set up the label {
         const labelObj = NS(capsG,'g',{
            id : v.id+'-label',
            'class' : `${NUTj}-label ${NUT}-label`
         });
-        //}
      
-        // put the percent in the label {
         let percObj = NS(labelObj,'text',{
             'id' : v.id+'-percent',
             'class' : `${NUT}-percent`,
@@ -171,9 +157,6 @@
         `<tspan dx="0.05em">${c}</tspan>` +
         `<tspan id="${v.id}-symbol" class="${NUT}-symbol" font-size="0.2em" dx="-0.2em" dy="-1.3em">%</tspan>` ;
         
-        //}
-        
-        // put caption in label {
         let capObj, werds =
             arc.querySelectorAll(
                 `${NUT}-cap,${NUT}-caption`
@@ -223,18 +206,22 @@
             }).append(werds);
             
         }
-        //}
+
+        arcObj.over = () => labelObj.classList.add(`${NUT}-label-hover`);
+        arcObj.out = () => labelObj.classList.remove(`${NUT}-label-hover`)
+
+        arcObj.addLizzers = () => {
+            arcObj.addEventListener('mouseover', arcObj.over);
+            arcObj.addEventListener('mouseout', arcObj.out);
+        };
+
+        arcObj.removeLizzers = () => {
+            arcObj.removeEventListener('mouseover', arcObj.over);
+            arcObj.removeEventListener('mouseout', arcObj.out);
+        }
+
         
-        // swap label-hover class on mouse {
-        arcObj.addEventListener('mouseover', ()=>
-            labelObj.classList.add(`${NUT}-label-hover`)
-        );
-        arcObj.addEventListener('mouseout', ()=>
-            labelObj.classList.remove(`${NUT}-label-hover`)
-        );
-        //}
-        
-        // give the arc a toggle method {
+
         arcObj[P.toggle] = val => {
             let a = {
                 label: capsG,
@@ -253,19 +240,14 @@
                 a[val].appendChild(b[val]);
             }
         };
-        //}
         
-        // handle no-shows {
         ['label','percent','caption'].forEach(t=>{
             if (v[`no${t}`]!==undefined) {
                  arcObj[P.toggle](t);
             }
         });
-        //}
         
-        // remove this nut-arc node {
         n.removeChild(arc);
-        //}
         
     });
      

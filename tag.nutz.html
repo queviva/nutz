@@ -1,7 +1,7 @@
 <!doctype html><html lang="en">
 <head><title>re-tag nutz</title>
 <script defer src="tag.nutz.js">
-"xxx-radius":111
+"xxx-radius" : 113
 </script>
 <style id="docStyles">
 
@@ -228,7 +228,7 @@ nut-arc { display: none; }
     ></nut-arc>
     <nut-arc
      perc="34"
-     fill="pat(pstars,#333,hsl(20,100%,22%),7)"
+     xxx-fill="pat(pstars,#333,hsl(20,100%,22%),7)"
      fill="pat(stix,#333,hsl(20,100%,22%),7)"
      cap="PATTERNS"
     ></nut-arc>
@@ -240,33 +240,47 @@ nut-arc { display: none; }
     <nut-arc perc="77" skip></nut-arc>
     <nut-arc id="gapper" perc="23" nopercent gaps="5,7,7,5"
     fill="none" stroke-width="20px" stroke="white"
-    >
-        
-    </nut-arc>
+    ></nut-arc>
     
 </nut-tag>
 </expo-zone>
 <hr>
 
 <expo-zone simple style="color:white;">
-<img src="mp3.png" height="160px">
+<img id="mp3" src="mp3.png" height="160px">
 <nut-tag id="simple" style="
     position:relative;
     display:inline-flex;
     height:160px;
     width:160px;
 ">
-    <nut-arc perc="47" fill="lightblue"
+    <nut-arc id="simple_boys" perc="47" fill="lightblue"
     cap="this is pretty much<br>what you'd think"></nut-arc>
-    <nut-arc perc="53" fill="pink"
+    <nut-arc id="simple_girls" perc="53" fill="pink"
     cap="fairly simple<br>to use"
+    active="false"
     ></nut-arc>
 </nut-tag>
-<img src="pillov.png" height="160px">
+<img id="pillov" src="pillov.png" height="160px">
+<script defer>
+
+    pillov.addEventListener('mouseover', e => 
+        document.getElementById('simple_boys').over()
+    );
+    pillov.addEventListener('mouseout', e => 
+        document.getElementById('simple_boys').out()
+    );
+    pillov.addEventListener('click', e => simple_boys.toggle('caption'));
+    mp3.addEventListener('mouseover', e => 
+        document.getElementById('simple_girls').dispatchEvent(new MouseEvent('mouseover', {bubbles: true}))
+    );
+    mp3.addEventListener('mouseout', e => 
+        document.getElementById('simple_girls').dispatchEvent(new MouseEvent('mouseout', {bubbles: true}))
+    );
+
+</script>
 </expo-zone>
 <hr>
-
-
 
 <div class="qr" style="text-align:right;">
     <img src="abe.png" style="height:80px;"/>
